@@ -1,0 +1,43 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tests
+    ports:
+      - "4242:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: tests
+      DB_PORT: 5432
+    ports:
+      - "5000:5000"
+    command: ["npm", "start"]
+
+  frontend:
+    build: "../retologin"
+    container_name: frontend_container
+    restart: always
+    depends_on: 
+    - backend
+    ports: 
+    - "3001:80"
+    environment:
+    - REACT_APP_API_URL=http://backend:5000
+volumes:
+  pgdata:

@@ -1,0 +1,19 @@
+meta {
+  name: create user
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:5000/auth/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "rafa",
+    "email": "frs3",
+    "password": "pass"
+  }
+}
