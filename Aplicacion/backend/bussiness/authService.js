@@ -49,7 +49,7 @@ export const loginMe = async ({ username, password }) => {
   }
 
   const token = jwt.sign(
-    { id: user.id, username: user.username },
+    { id: user.id, username: user.username }, // role: user.role añadir rol y quiza otros datos importantes
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );

@@ -7,7 +7,7 @@ import path from "path";
 import {Sequelize} from "sequelize";
 import process from "process";
 import {fileURLToPath, pathToFileURL} from "url";
-import configData from '../config/config.json' assert { type: 'json' };
+const configData = JSON.parse(fs.readFileSync(new URL('../config/config.json', import.meta.url)));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

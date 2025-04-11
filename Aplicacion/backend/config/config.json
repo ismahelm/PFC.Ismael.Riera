@@ -12,20 +12,20 @@
     "database": "training_db",
     "host": "192.168.1.139",
     "dialect": "postgres",
-    "port": 4242
+    "port": 5432
   },
   "test": {
     "username": "postgres",
     "password": "password",
     "database": "training_db",
-    "host": "db",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "password",
     "database": "tests_production",
-    "host": "db",
+    "host": "localhost",
     "dialect": "postgres"
   }
 }
