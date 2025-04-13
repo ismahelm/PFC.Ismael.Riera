@@ -15,19 +15,14 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
+      certificate_validity: {
+        type: Sequelize.INTEGER
+      },
       file_path: {
         type: Sequelize.STRING
       },
       optional: {
         type: Sequelize.BOOLEAN
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

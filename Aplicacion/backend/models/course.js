@@ -8,17 +8,25 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Course.hasMany(models.Progress, { foreignKey: 'course_id' });
+      Course.hasMany(models.Certificate, { foreignKey: 'course_id' });
+      Course.hasMany(models.TestResult, { foreignKey: 'course_id' });
+      Course.hasHooks(models.Test, {foreignKey: 'course_id'})
+
+
     }
   }
   Course.init({
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
+    certificate_validity: DataTypes.INTEGER,
     file_path: DataTypes.STRING,
     optional: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Course',
+    timestamps: false  // No utilizamos los timestamps automáticos de Sequelize
+
   });
   return Course;
 };

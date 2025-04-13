@@ -18,18 +18,13 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      position: {
+        type: Sequelize.STRING
+      },
       role: {
         type: Sequelize.STRING
       },
       created_at: {
-        type: Sequelize.DATE
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

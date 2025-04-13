@@ -1,0 +1,9 @@
+09/04 copiar backend y sequelize de tablas principales
+
+next: tablas secundarias y probar alguna ruta tonta
+npx sequelize-cli model:generate --name Progress --attributes user_id:integer,course_id:integer,completed_at:date,validity:date,status:boolean,certificate_path:string
+
+
+npx sequelize-cli model:generate --name Test --attributes course_id:integer,question_text:text,options:jsonb,correct_answer:string
+
+npx sequelize-cli model:generate --name Certificate --attributes course_id:integer,user_id_:integer,obtained_at:date,file_path:string

@@ -9,7 +9,10 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Progress, { foreignKey: 'user_id' });
+      User.hasMany(models.Certificate, { foreignKey: 'user_id' });
+      User.hasMany(models.TestResult, { foreignKey: 'user_id' });
+
     }
   }
 
@@ -37,6 +40,10 @@ export default (sequelize, DataTypes) => {
         notEmpty: true,  // Validamos que no esté vacío
         isEmail: true  // Validamos que el formato del correo electrónico sea correcto
       }
+    },position: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'user',  // Por defecto será 'user', pero esto puedes cambiarlo según tu necesidad
     },
     role: {
       type: DataTypes.STRING,
@@ -51,7 +58,6 @@ export default (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    tableName: 'users',  // Aseguramos que la tabla se llame "users"
     timestamps: false  // No utilizamos los timestamps automáticos de Sequelize
   });
 
