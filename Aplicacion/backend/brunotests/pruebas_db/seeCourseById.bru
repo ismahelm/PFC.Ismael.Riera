@@ -1,0 +1,17 @@
+meta {
+  name: seeCourseById
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:5000/user/seeCourseId
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "courseId": 3
+  }
+}

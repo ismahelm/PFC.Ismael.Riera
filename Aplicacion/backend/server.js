@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
+import trainRoutes from "./routes/trainRoutes.js";
 import db from "./models/index.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
@@ -29,4 +30,6 @@ function startServer(){
 startServer();
 app.use("/auth", authRoutes)
 app.use ("/user", userRoutes)
+app.use ("/train", trainRoutes)
+
 

@@ -1,0 +1,18 @@
+meta {
+  name: watch test result
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:5000/train/watchTestResults
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId": 1,
+    "courseId": 1
+  }
+}

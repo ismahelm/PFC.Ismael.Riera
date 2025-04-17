@@ -1,0 +1,17 @@
+meta {
+  name: seeCourseByName
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:5000/user/seeCourseName
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "courseName": "Curso de Desarrollo Web"
+  }
+}

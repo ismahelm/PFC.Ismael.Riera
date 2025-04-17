@@ -53,7 +53,7 @@ const LoginPage = () => {
                 <CustomButton text="Iniciar sesión" type="submit" />
             </form>
             Logeado: {isLogged?"si": "no"}
-                <CustomButton text="el bueno" onClick={(buengotowelcome)}/>
+                <CustomButton text="Iniciar sesióm ;)" onClick={(buengotowelcome)}/>
         </Box>
         
     );

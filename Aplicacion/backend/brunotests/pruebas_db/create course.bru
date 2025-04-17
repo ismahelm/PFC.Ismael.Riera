@@ -1,0 +1,21 @@
+meta {
+  name: create course
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:5000/train/createCourse
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "curso de prueba",
+    "description": "lorem ipsum",
+    "certificate_validity": 365,
+    "file_path": "ruta/al/curso",
+    "optional": true
+  }
+}

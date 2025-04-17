@@ -1,0 +1,18 @@
+meta {
+  name: asign course
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:5000/train/assignCourse
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId": 1,
+    "courseId": 9
+  }
+}

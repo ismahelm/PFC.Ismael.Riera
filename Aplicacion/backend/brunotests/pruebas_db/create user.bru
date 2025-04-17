@@ -1,0 +1,21 @@
+meta {
+  name: create user
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/train/signin
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Bruno",
+    "password": "password123",
+    "email": "bruno@example.com",
+    "position": "camarero",
+    "role": "user"
+  }
+}

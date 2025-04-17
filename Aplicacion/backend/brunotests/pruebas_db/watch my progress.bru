@@ -1,0 +1,17 @@
+meta {
+  name: watch my progress
+  type: http
+  seq: 11
+}
+
+post {
+  url: http://localhost:5000/user/myProgress
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId": 1
+  }
+}
