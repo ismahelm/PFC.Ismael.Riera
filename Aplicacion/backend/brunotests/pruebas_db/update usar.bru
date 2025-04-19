@@ -1,0 +1,20 @@
+meta {
+  name: update usar
+  type: http
+  seq: 17
+}
+
+put {
+  url: http://localhost:5000/user/updateProfile
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+   "userId":8,
+    "newEmail": "unemai2l@thatisemail.com",
+    "newUserName": "user",
+    "newPassword": "password"
+  }
+}

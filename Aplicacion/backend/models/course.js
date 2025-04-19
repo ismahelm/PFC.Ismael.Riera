@@ -8,10 +8,14 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Course.hasMany(models.Progress, { foreignKey: 'course_id' });
-      Course.hasMany(models.Certificate, { foreignKey: 'course_id' });
-      Course.hasMany(models.TestResult, { foreignKey: 'course_id' });
-      Course.hasHooks(models.Test, {foreignKey: 'course_id'})
+      Course.hasMany(models.Progress, { foreignKey: 'course_id',
+        onDelete: 'CASCADE', });
+      Course.hasMany(models.Certificate, { foreignKey: 'course_id',
+        onDelete: 'CASCADE', });
+      Course.hasMany(models.TestResult, { foreignKey: 'course_id',
+        onDelete: 'CASCADE', });
+      Course.hasHooks(models.Test, {foreignKey: 'course_id',
+        onDelete: 'CASCADE',})
 
 
     }
@@ -20,6 +24,7 @@ export default (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     certificate_validity: DataTypes.INTEGER,
+    score_required: DataTypes.INTEGER,
     file_path: DataTypes.STRING,
     optional: DataTypes.BOOLEAN
   }, {

@@ -8,16 +8,17 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Progress.belongsTo(models.User, { foreignKey: 'user_id' });
+      Progress.belongsTo(models.User, { foreignKey: 'user_id',
+        onDelete: 'CASCADE', });
       Progress.belongsTo(models.Course, { foreignKey: 'course_id' });    }
   }
   Progress.init({
     user_id: DataTypes.INTEGER,
     course_id: DataTypes.INTEGER,
-    completed_at: DataTypes.DATE,
-    validity: DataTypes.DATE,
+    completed_at: DataTypes.DATEONLY,
+    validity: DataTypes.DATEONLY,
     status: DataTypes.BOOLEAN,
-    certificate_path: DataTypes.STRING
+    assigned_at: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'Progress',

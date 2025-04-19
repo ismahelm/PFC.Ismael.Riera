@@ -12,30 +12,38 @@ module.exports = {
           c: 'Un servidor web',
         }),
         correct_answer: 'a',
-       
       },
       {
-        course_id: 2,
-        question_text: '¿Qué es Node.js?',
+        course_id: 1,
+        question_text: '¿Cuál es el resultado de 2 + "2" en JavaScript?',
         options: JSON.stringify({
-          a: 'Un framework de JavaScript',
-          b: 'Un sistema operativo',
-          c: 'Un entorno de ejecución para JavaScript',
+          a: '22',
+          b: '4',
+          c: 'NaN',
         }),
-        correct_answer: 'c',
-        
+        correct_answer: 'a',
       },
       {
-        course_id: 3,
-        question_text: '¿Qué es SQL?',
+        course_id: 1,
+        question_text: '¿Qué método se usa para imprimir en consola?',
         options: JSON.stringify({
-          a: 'Un lenguaje de programación',
-          b: 'Un sistema operativo',
-          c: 'Un lenguaje de consulta de bases de datos',
+          a: 'console.log()',
+          b: 'print()',
+          c: 'log.console()',
+        }),
+        correct_answer: 'a',
+      },
+      {
+        course_id: 1,
+        question_text: '¿Qué estructura de control se usa para repetir código?',
+        options: JSON.stringify({
+          a: 'if',
+          b: 'loop',
+          c: 'for',
         }),
         correct_answer: 'c',
-  
       },
+     
     ], {});
   },
 

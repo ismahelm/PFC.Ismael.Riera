@@ -1,0 +1,18 @@
+meta {
+  name: completeCourse
+  type: http
+  seq: 15
+}
+
+post {
+  url: http://localhost:5000/user/completeCourse
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId": 4,
+    "courseId": 2
+  }
+}

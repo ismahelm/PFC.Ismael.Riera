@@ -18,7 +18,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'      },
       obtained_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       course_id: {
         type: Sequelize.INTEGER,
@@ -29,7 +29,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'      },
       obtained_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       score: {
         type: Sequelize.INTEGER
@@ -38,7 +38,7 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       completed_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       }
     });
   },

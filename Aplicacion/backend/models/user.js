@@ -9,9 +9,12 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.Progress, { foreignKey: 'user_id' });
-      User.hasMany(models.Certificate, { foreignKey: 'user_id' });
-      User.hasMany(models.TestResult, { foreignKey: 'user_id' });
+      User.hasMany(models.Progress, { foreignKey: 'user_id',
+        onDelete: 'CASCADE', });
+      User.hasMany(models.Certificate, { foreignKey: 'user_id',
+        onDelete: 'CASCADE', });
+      User.hasMany(models.TestResult, { foreignKey: 'user_id',
+        onDelete: 'CASCADE', });
 
     }
   }
@@ -51,7 +54,7 @@ export default (sequelize, DataTypes) => {
       defaultValue: 'user',  // Por defecto será 'user', pero esto puedes cambiarlo según tu necesidad
     },
     created_at: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: DataTypes.NOW  // Establecemos que el valor por defecto sea la fecha actual
     }

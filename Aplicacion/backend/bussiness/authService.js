@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import db from "../models/index.js";
 import bcrypt from "bcrypt";
-
 export const dbexists = async ()=>
 {
  const dbisok = await db.User.findOne({ where: { username: "admin" }})
@@ -18,16 +17,11 @@ export const loginMe = async ({ username, password }) => {
     throw new Error("user not found");
   }
 
-  /*const correct = await bcrypt.compare(password, user.password);
+  const correct = await bcrypt.compare(password, user.password);
   if (!correct) {
     throw new Error("Wrong password");
   }
-*/
-if (password!=user.password)
-{
-  throw new Error("Wrong password");
 
-}
 console.log(user.role)
   const token = jwt.sign(
     { id: user.id, username: user.username, role: user.role },

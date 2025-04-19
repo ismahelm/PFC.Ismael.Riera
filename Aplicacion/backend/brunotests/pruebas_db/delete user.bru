@@ -1,0 +1,17 @@
+meta {
+  name: delete user
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:5000/train/deleteUser
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userName": "Bruno"
+  }
+}

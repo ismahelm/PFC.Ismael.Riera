@@ -1,0 +1,17 @@
+meta {
+  name: delete course
+  type: http
+  seq: 16
+}
+
+post {
+  url: http://localhost:5000/train/deleteCourse
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "courseName": "Curso de Python"
+  }
+}

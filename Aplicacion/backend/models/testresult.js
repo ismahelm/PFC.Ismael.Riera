@@ -8,15 +8,17 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      TestResult.belongsTo(models.User, { foreignKey: 'user_id' });
-      TestResult.belongsTo(models.Course, { foreignKey: 'course_id' });            }
+      TestResult.belongsTo(models.User, { foreignKey: 'user_id',
+        onDelete: 'CASCADE', });
+      TestResult.belongsTo(models.Course, { foreignKey: 'course_id',
+        onDelete: 'CASCADE', });            }
   }
   TestResult.init({
     user_id: DataTypes.INTEGER,
     course_id: DataTypes.INTEGER,
     score: DataTypes.INTEGER,
     passed: DataTypes.BOOLEAN,
-    completed_at: DataTypes.DATE
+    completed_at: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'TestResult',

@@ -1,0 +1,19 @@
+meta {
+  name: create my certificate
+  type: http
+  seq: 14
+}
+
+post {
+  url: http://localhost:5000/user/createCertificate
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId": 2,
+    "courseId": 1,
+    "filePath": "ruta/al/certificado"
+  }
+}

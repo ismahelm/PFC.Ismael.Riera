@@ -1,5 +1,6 @@
-import { DATE } from "sequelize";
+import { DATE, where } from "sequelize";
 import db from "../models/index.js";
+import bcrypt from "bcrypt";
 
 export const watchResults = async ({ userId, courseId }) => {
   const results = await db.TestResult.findAll({
@@ -8,27 +9,71 @@ export const watchResults = async ({ userId, courseId }) => {
   return results;
 };
 
+export const getAllResultsByCourse = async (courseId) => {
+  return await db.TestResult.findAll({
+    where: { course_id: courseId },
+    include: [{ model: db.User, attributes: ['username', 'email'] }]
+  });
+};
+
+
 export const assignmentList = async ({ userId }) => {
   const results = await db.Progress.findAll({ where: { user_id: userId } });
   return results;
 };
 export const userList = async () => {
-  const userlist = await db.User.findAll();
-  console.log(userlist);
-  return userlist;
+  const userList = await db.User.findAll();
+  return userList;
 };
+
+export const getAllProgress = async () => {
+  return await db.Progress.findAll({
+    include: [
+      { model: db.User, attributes: ["username", "email"] },
+      { model: db.Course, attributes: ["title"] }
+    ]
+  });
+};
+
 export const assignCourse = async ({ userId, courseId }) => {
-  console.log({ userId });
+  const courseIsAssigned = await db.Progress.findOne({where: {user_id: userId, course_id: courseId}})
+  if (courseIsAssigned)
+  {
+    throw new Error("course is already assigned")
+  }
+  const today = new Date(); // Fecha de obtención
+
   const newProgress = await db.Progress.create({
     user_id: userId,
     course_id: courseId,
     completed_at: null,
-    certificate_path: "ruta/al/certificado/obtenbido",
+    assigned_at: today,
     status: false,
-    validity: new Date(),
+    validity: null
   });
   return newProgress;
 };
+
+export const deleteUser = async ({userName}) =>
+{
+try {
+   const user = await db.User.findOne({where: {username: userName}})
+  await user.destroy(); // Borrado real
+  return { message: "User deleted successfully" };}
+ catch (error) {
+  throw new Error(error)
+}}
+
+export const deleteCourse = async ({courseName}) =>
+  {
+  try {
+     const course = await db.Course.findOne({where: {title: courseName}})
+    await course.destroy(); // Borrado real
+    return { message: "course deleted successfully" };}
+   catch (error) {
+    throw new Error(error)
+  }}
+ 
 
 export const createCourse = async ({
   title,
@@ -37,7 +82,12 @@ export const createCourse = async ({
   file_path,
   optional,
 }) => {
-  const newCourse = db.Course.create({
+  const courseExists = await db.Course.findOne({where: {title: title}})
+  if (courseExists)
+  {
+    throw new Error ("Course already exists")
+  }
+  const newCourse = await db.Course.create({
     title: title,
     description: description,
     certificate_validity: certificate_validity,
@@ -48,13 +98,13 @@ export const createCourse = async ({
 };
 
 export const createUser = async ({
-  username,
+  userName,
   email,
   password,
   position,
   role,
 }) => {
-  const userExists = await db.User.findOne({ where: { username } });
+  const userExists = await db.User.findOne({ where: { username: userName } });
   if (userExists) {
     throw new Error("user already exists");
   }
@@ -65,13 +115,13 @@ export const createUser = async ({
   if (!["user", "trainer"].includes(role)) {
     throw new Error("invalid role");
   }
-  /*
+  
     const codedPassword = await bcrypt.hash(password, 10);
-    */
+    console.log(codedPassword)
   const newUser = await db.User.create({
-    username,
+    username: userName,
     email,
-    password,
+    password: codedPassword,
     position,
     role,
   });

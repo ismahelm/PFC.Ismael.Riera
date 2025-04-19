@@ -28,16 +28,16 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       completed_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       validity: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       status: {
         type: Sequelize.BOOLEAN
       },
-      certificate_path: {
-        type: Sequelize.STRING
+      assigned_at: {
+        type: Sequelize.DATEONLY
       }
     });
   },

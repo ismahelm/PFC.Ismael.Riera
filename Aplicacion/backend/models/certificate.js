@@ -8,13 +8,16 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Certificate.belongsTo(models.User, { foreignKey: 'user_id' });
-      Certificate.belongsTo(models.Course, { foreignKey: 'course_id' });        }
+      Certificate.belongsTo(models.User, { foreignKey: 'user_id',
+        onDelete: 'CASCADE', });
+      Certificate.belongsTo(models.Course, { foreignKey: 'course_id',
+        onDelete: 'CASCADE', });        }
   }
   Certificate.init({
     course_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
-    obtained_at: DataTypes.DATE,
+    obtained_at: DataTypes.DATEONLY,
+    validity: DataTypes.DATEONLY,
     file_path: DataTypes.STRING
   }, {
     sequelize,

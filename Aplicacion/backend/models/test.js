@@ -10,6 +10,7 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       Test.belongsTo(models.Course, {
         foreignKey: 'course_id',
+        onDelete: 'CASCADE',
         as: 'course'
       });    }
   }

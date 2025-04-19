@@ -17,6 +17,9 @@ module.exports = {
       },
       certificate_validity: {
         type: Sequelize.INTEGER
+      }, 
+      score_required: {
+        type: Sequelize.INTEGER
       },
       file_path: {
         type: Sequelize.STRING

@@ -9,7 +9,6 @@ module.exports = {
         completed_at: new Date(),
         validity: new Date(),
         status: true,
-        certificate_path: '/path/to/certificate1.pdf',
 
       },
       {
@@ -18,7 +17,6 @@ module.exports = {
         completed_at: new Date(),
         validity: new Date(),
         status: true,
-        certificate_path: '/path/to/certificate2.pdf',
 
       },
       {
@@ -27,7 +25,6 @@ module.exports = {
         completed_at: new Date(),
         validity: new Date(),
         status: false,
-        certificate_path: '/path/to/certificate3.pdf',
         
       },
     ], {});

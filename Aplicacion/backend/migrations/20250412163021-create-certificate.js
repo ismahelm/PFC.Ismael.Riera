@@ -27,7 +27,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'      },
       obtained_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       file_path: {
         type: Sequelize.STRING
