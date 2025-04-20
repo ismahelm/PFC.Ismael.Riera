@@ -3,9 +3,9 @@ import { Navigate } from "react-router-dom";
 import useAuthStore from "../contexts/AuthContext";
 
 const AuthRoute = ({ element }) => {
-  const isLogged = useAuthStore((state) => state.isLogged);
+  const user = useAuthStore((state) => state.user);
 
-  if (!isLogged) {
+  if (!user) {
     return <Navigate to="/" />;
   }
   

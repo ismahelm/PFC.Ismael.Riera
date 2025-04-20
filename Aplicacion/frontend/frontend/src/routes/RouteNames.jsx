@@ -2,9 +2,9 @@ import useAuthStore from "../contexts/AuthContext";
 
 // Convertir routeNames a un hook personalizado
 const useRouteNames = () => {
-  const role = useAuthStore((state) => state.role);
+  const user = useAuthStore((state) => state.user);
 
-  if (role === "trainer") {
+  if (user.role === "trainer") {
     return [
       { name: "Home", path: "/welcome-trainer" },
       { name: "Courses", path: "/courses" },
