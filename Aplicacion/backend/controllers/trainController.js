@@ -5,7 +5,7 @@ import {
   createCourse,
   watchResults,
   assignmentList,
-  deleteUser, deleteCourse
+  deleteUser, deleteCourse, userId
 } from "../bussiness/trainService.js";
 
 export const resultList = async (req, res) => {
@@ -49,6 +49,14 @@ export const getUsersList = async (req, res) => {
   try {
     const list = await userList();
     res.status(200).json({ message: "succes", list });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const getUserId = async (req, res) => {
+  try {
+    const userid = await userId(req.body.userName);
+    res.status(200).json({ message: "succes", userid });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

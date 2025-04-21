@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsersList, newUser, newProgress, createACourse, resultList, watchAssignments, deleteAUser, deleteACourse } from "../controllers/trainController.js";
+import { getUsersList, newUser, newProgress, createACourse, resultList, watchAssignments, deleteAUser, deleteACourse, getUserId } from "../controllers/trainController.js";
 
 
 
@@ -13,6 +13,7 @@ trainRouter.post("/deleteCourse", deleteACourse)
 
 trainRouter.post("/watchTestResults", resultList)
 trainRouter.post("/watchAssignments", watchAssignments)
+trainRouter.post("/getId", getUserId)
 
 
 export default trainRouter;

@@ -2,7 +2,7 @@ import React from "react";
 import * as MuiIcons from "@mui/icons-material";
 
 
-const CustomIcon = ({ name, color = "inherit", size = "medium" }) => {
+const CustomIcon = ({ name, color, size = "medium" }) => {
   const IconComponent = MuiIcons[name];
 
   if (!IconComponent) {
@@ -10,7 +10,7 @@ const CustomIcon = ({ name, color = "inherit", size = "medium" }) => {
     return null;
   }
 
-  return <IconComponent color={color} fontSize={size} />;
+  return <IconComponent sx={{ color:color }} fontSize={size} />;
 };
 
 export default CustomIcon;

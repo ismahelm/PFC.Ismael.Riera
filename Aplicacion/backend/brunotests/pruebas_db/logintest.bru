@@ -5,14 +5,13 @@ meta {
 }
 
 post {
-  url: http://localhost:5000/auth/login
+  url: http://localhost:5000/user/myProgress
   body: json
   auth: none
 }
 
 body:json {
   {
-    "username": "isma2",
-    "password": "pass"
+    "userId": "4"
   }
 }

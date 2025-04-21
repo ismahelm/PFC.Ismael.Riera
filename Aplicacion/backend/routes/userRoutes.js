@@ -5,7 +5,7 @@ import { CourseInfoId, CourseInfoName, seeMyProfile, updateProfile, seeProgress,
  } from "../controllers/userController.js";
 
 const userRouter = express.Router()
-userRouter.get("/seeProfile", authenticateToken, seeMyProfile );
+userRouter.get("/seeProfile", seeMyProfile );
 userRouter.put("/updateProfile", updateProfile);
 userRouter.post("/seeCourseName", CourseInfoName );
 userRouter.post("/seeCourseId",  CourseInfoId);

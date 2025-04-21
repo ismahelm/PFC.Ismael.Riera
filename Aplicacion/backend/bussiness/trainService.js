@@ -25,7 +25,10 @@ export const userList = async () => {
   const userList = await db.User.findAll();
   return userList;
 };
-
+export const userId = async (userName) => {
+  const user = await db.User.findOne({where: {username: userName}});
+  return user.id;
+};
 export const getAllProgress = async () => {
   return await db.Progress.findAll({
     include: [
@@ -36,6 +39,7 @@ export const getAllProgress = async () => {
 };
 
 export const assignCourse = async ({ userId, courseId }) => {
+  console.log(userId,courseId)
   const courseIsAssigned = await db.Progress.findOne({where: {user_id: userId, course_id: courseId}})
   if (courseIsAssigned)
   {
@@ -104,6 +108,11 @@ export const createUser = async ({
   position,
   role,
 }) => {
+  console.log( userName,
+    email,
+    password,
+    position,
+    role,)
   const userExists = await db.User.findOne({ where: { username: userName } });
   if (userExists) {
     throw new Error("user already exists");
