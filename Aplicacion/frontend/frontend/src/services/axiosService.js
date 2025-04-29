@@ -23,6 +23,40 @@ class AuthService {
     return axios.put("/user/updateProfile", data);
   }
     */
+  async addCourse(data){
+    const response = await axios.post('http://localhost:5000/train/createCourse', 
+      data,  // Cambié 'userName' a 'username'
+    ); 
+  return response
+  }
+ 
+  async getTest (data){
+    console.log(data)
+    const response = await axios.post("http://localhost:5000/user/getTest",
+      {courseId: data},
+    )
+    console.log(response)
+    return response
+  }
+
+  async correctTest (data){
+    const response = await axios.post("http://localhost:5000/user/correctTest",
+      data,
+    )
+    console.log(response)
+    return response
+  }
+
+  async seeCourseFile(data)
+  {
+    const response = await axios.post("http://localhost:5000/user/seeCourseId",
+        {
+            courseId: data
+        }
+    )
+    return response.data.courseFile
+  }
+
   async getCourses(data) {
     const response = await axios.post('http://localhost:5000/user/myProgress', {
         userId: data,  // Cambié 'userName' a 'username'

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CourseList from "../organisms/CourseList";
 import DrawerMenu from '../organisms/DrawerMenu';
 import useAuthStore from "../../contexts/AuthContext";
-import Title from "../atoms/Title"
+
 export default function CoursesPage() {
   const user = useAuthStore((state) => state.user);
   const getCourses = useAuthStore((state) => state.getCourses); // Función para obtener los cursos
@@ -13,10 +13,8 @@ export default function CoursesPage() {
     const fetchCourses = async () => {
       if (user) {
         try {
-          console.log("Fetching courses for user ID:", user.id);
           const response = await getCourses(user.id);  // Esperamos la respuesta
-          console.log("Cursos obtenidos:", response.progressList.progressList);  // Imprimimos los cursos
-          setCourses(response.progressList.progressList);  // Suponiendo que la respuesta contiene un campo `data`
+          setCourses(response.progressList.progressList);  
         } catch (error) {
           console.error("Error al obtener cursos:", error);
         } finally {
@@ -35,8 +33,10 @@ export default function CoursesPage() {
   return (
     <>
       <h2>CoursesPage</h2>
-      {courses!=null&& <Title text={courses[0].Course.title}> </Title>}
-         <CourseList courses={courses} /> 
+      {courses!=null&&
+         <CourseList courses={courses}
+         /> 
+ }
 
       
      

@@ -4,6 +4,12 @@ import { jwtDecode } from 'jwt-decode';
 const useAuthStore = create((set, get) => ({
   user: { id: null, role: null, username: null },
   token: null,
+  mode: 'light',
+  toggleTheme: () =>
+    set((state) => ({
+      mode: state.mode === 'light' ? 'dark' : 'light',
+    })),
+
   //borrar password?
   login: async ({userName, password}) =>{ 
     try {
@@ -23,7 +29,18 @@ const useAuthStore = create((set, get) => ({
       throw err; // Por si quieres capturarlo en el componente
     }
   },
-
+ getTest: async (data)=>
+ {
+    const test = await AuthService.getTest(data)
+    console.log(test)
+    return test
+ },
+ correctTest: async (data) =>
+ {
+  const correction = await AuthService.correctTest(data)
+  console.log(correction)
+  return correction
+ },
   getCourses: async () => {
     const { user } = get(); // 👈 así accedes al estado actual
   
@@ -39,7 +56,21 @@ const useAuthStore = create((set, get) => ({
       throw err;
     }
   },
+  createCourse: async (data)=>
+    {
+      try {
+        const res = await AuthService.addCourse(
+          
+           data
+        );
+        return res.data
+      } catch (error) {
+        console.error("Fetching courses failed:", error);
   
+        throw error;
+  
+      }
+    },
   addUser: async (data)=>
   {
     try {
@@ -55,18 +86,22 @@ const useAuthStore = create((set, get) => ({
 
     }
   },
+  seeCourseFile: async (courseId) =>
+  {
+    const courseRoute = await AuthService.seeCourseFile(courseId)
+return courseRoute  },
   assignCourse: async (selectedUser, selectedCourse) =>{
     const selectedCourseId = await AuthService.getCourseByName(selectedCourse)
 
     const selectedUserId = await AuthService.getUserId(selectedUser)
-    console.log(selectedUserId)
+    console.log(selectedUserId )
     const assignedCourse = await AuthService.assignCourse({
       userId: selectedUserId,
       courseId: selectedCourseId
     })
     console.log(assignedCourse)
   },
-  logout: () => set({ user: null, token: null }),
+  logOut: () => set({ user: null, token: null }),
   
 }));
 

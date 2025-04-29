@@ -7,7 +7,8 @@ import {
   seeCertificates,
   completeCourse,
   getTestByCourse,
-  correctTest
+  correctTest,
+  seeCourseFile
 } from "../bussiness/userService.js";
 
 export const seeMyProfile = async (req, res) => {
@@ -40,11 +41,13 @@ export const getTest = async(req,res) =>{
     res.status(500).json({ message: error.message });
   }
 }
-export const CourseInfoId = async (req, res) => {
+export const courseFile = async (req, res) => {
   try {
-    const courseInfo = await seeCourseById(req.body.courseId);
-    res.status(200).json({ courseInfo: courseInfo });
-  } catch {
+    const courseInfo = await seeCourseFile(req.body.courseId);
+    console.log(courseInfo)
+    res.status(200).json({ courseFile:  "https://drive.google.com/file/d/"+courseInfo+"/preview"
+    });
+  } catch (error){
     res.status(500).json({ message: error.message });
   }
 };

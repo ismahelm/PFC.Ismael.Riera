@@ -4,7 +4,8 @@ import routes from './routes';
 
 const App = () => {  
 
-  return (useRoutes(routes)
+  return (
+    useRoutes(routes)
   );
 };
 

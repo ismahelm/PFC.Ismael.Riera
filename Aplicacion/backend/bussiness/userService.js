@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import db from "../models/index.js"; // Importar db desde index.js
 import bcrypt from "bcrypt";
+import { generateCertificate } from "./certificateGenerator.js";
+import { uploadPdfToDrive } from "./googleDriveService.js"; // Ajusta la ruta si es necesario
 
 export const seeProfile = async ({ id }) => {
   try {
@@ -46,16 +48,30 @@ export const seeMyProgress = async ({ userId }) => {
 };
 
 export const seeCertificates = async ({ userId }) => {
-  const certificateList = await db.Certificate.findAll({
+  try {
+     const certificateList = await db.Certificate.findAll({
     where: { user_id: userId },
   });
   return certificateList;
+  } catch (error) {
+    throw new Error(error);
+
+  }
+ 
 };
 export const seeCourseById = async (courseId) => {
   try {
     const courseInfo = await db.Course.findByPk(courseId);
 
     return courseInfo.dataValues;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+export const seeCourseFile = async (courseId) => {
+  try {
+    const courseInfo = await db.Course.findByPk(courseId);
+    return courseInfo.dataValues.file_path;
   } catch (error) {
     throw new Error(error);
   }
@@ -116,35 +132,49 @@ export const getCourseFile = async (courseId) => {
   return course.file_path; // O redireccionas al enlace directamente
 };
 
-export const completeCourse = async ({userId, courseId})=> {
- 
+
+export const completeCourse = async ({ userId, courseId }) => {
   try {
-    const today = new Date()
-  const completedCourse = await db.Course.findByPk(courseId)
+    console.log("completed progress");
+    const today = new Date();
 
-  const completedProgress = await db.Progress.findOne({where: {user_id: userId, course_id: courseId}})
-  const validityDate = new Date(today);
-  validityDate.setDate(today.getDate() + completedCourse.certificate_validity);
-  await completedProgress.update({
-    completed_at: today,
-    validity: validityDate,
-    status: true
-  });  
+    const completedCourse = await db.Course.findByPk(courseId);
+    const user = await db.User.findByPk(userId);
+    const completedProgress = await db.Progress.findOne({
+      where: { user_id: userId, course_id: courseId },
+    });
 
-  const newCertificate = await db.Certificate.create({
-    user_id: userId,
-    course_id: courseId,
-    obtained_at: today,
-    file_path: "ruta al archivo",
-    validity: validityDate
-  });
-  return {completedProgress, newCertificate}
+    const validityDate = new Date(today);
+    validityDate.setDate(today.getDate() + completedCourse.certificate_validity);
 
-} catch (error) {
-    throw new Error(error);
+    await completedProgress.update({
+      completed_at: today,
+      validity: validityDate,
+      status: true,
+    });
 
+    // 🧾 Generar el PDF
+    const localPath = await generateCertificate(user, completedCourse);
+
+    // ☁️ Subir a Google Drive
+    const fileName = `Certificado_${user.username}_${completedCourse.title}.pdf`;
+    const driveFile = await uploadPdfToDrive(localPath, fileName);
+
+    // 📦 Guardar en la base de datos
+    const newCertificate = await db.Certificate.create({
+      user_id: userId,
+      course_id: courseId,
+      obtained_at: today,
+      file_path: driveFile.webViewLink, // o webContentLink si lo quieres descargable directamente
+      validity: validityDate,
+    });
+
+    return { completedProgress, newCertificate };
+
+  } catch (error) {
+    throw new Error("Error completando curso: " + error.message);
   }
-}
+};
 export const correctTest = async ({ userId, courseId, answers }) => {
   try {
     // 1. Obtener todas las preguntas del curso
@@ -174,7 +204,8 @@ export const correctTest = async ({ userId, courseId, answers }) => {
     });
 if (passed)
 {
-  completeCourse({userId,courseId})
+  console.log(userId+" "+courseId)
+ await completeCourse({userId,courseId})
 }
     return {
       score,

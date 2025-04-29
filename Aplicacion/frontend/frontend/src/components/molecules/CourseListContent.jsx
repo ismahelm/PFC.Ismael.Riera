@@ -1,18 +1,36 @@
-import { Card, CardContent, Typography, IconButton } from "@mui/material";
-import CustomButton from "../atoms/Button";
+import { CardContent, Typography, Box } from "@mui/material";
+import CustomButton from '../atoms/CustomButton/CustomButton';
 import CustomIcon from "../atoms/Icon";
-const CourseItem = (assignment
-) => {
-    return (
-      <Card className="flex items-center p-4 mb-2 shadow-md" >
-        <CardContent className="flex-grow">
-          <Typography >{assignment.Course.title}</Typography>
-        </CardContent>
-        <CustomButton text={"curso"}/>
-        <CustomButton text={"certificado"} />
-        <CustomIcon name={"Circle"} color={assignment.status?"green":"red"}/>
-          </Card>
-    );
-  };
+import CustomCard from "@/components/atoms/CustomCard";
 
-  export default CourseItem
+const CourseItem = ({ assignment, handleSeeCourse, courseWatched, handleOpenTest }) => {
+  return (
+    <CustomCard>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row"
+        }}
+      >
+        <CardContent>
+          <Typography>{assignment.Course.title}</Typography>
+        </CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column"
+          }}
+        >
+          <CustomButton text={"curso"} width="150px" onClick={handleSeeCourse} />
+          {courseWatched && ( // 👈 Si fue visto, mostrar "Test"
+            <CustomButton text={"Test"} width="150px" onClick={handleOpenTest} />
+          )}
+          <CustomButton text={"certificado"} width="150px" />
+        </Box>
+        <CustomIcon name={"Circle"} color={assignment.status ? "green" : "red"} />
+      </Box>
+    </CustomCard>
+  );
+};
+
+export default CourseItem;

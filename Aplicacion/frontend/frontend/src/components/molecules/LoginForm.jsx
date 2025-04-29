@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import TextInput from "../atoms/TextField"
-import CustomButton from "../atoms/Button";
+import { Box } from "@mui/material";
+import CustomTextField from "@/components/atoms/TextField"
+import CustomButton from '@/components/atoms/CustomButton';
+import Title from "@/components/atoms/Title";
 const LoginForm = ({ userName, password, onUserNameChange, onPasswordChange, onSubmit }) => (
   <Box
     component="form"
@@ -17,12 +18,10 @@ const LoginForm = ({ userName, password, onUserNameChange, onPasswordChange, onS
       gap: "20px",
     }}
   >
-    <Typography variant="h5" align="center">
-      Iniciar sesión
-    </Typography>
+<Title text={"INICIAR SESION"} fontColor={"primary.font"}/>
 
-    <TextInput label="Usuario" value={userName} onChange={onUserNameChange} />
-    <TextInput label="Contraseña" type="password" value={password} onChange={onPasswordChange} />
+    <CustomTextField placeholder="Usuario" value={userName} onChange={onUserNameChange} />
+    <CustomTextField placeholder="Contraseña" type="password" value={password} onChange={onPasswordChange} />
     <CustomButton type="submit" text="Entrar" />
   </Box>
 );
