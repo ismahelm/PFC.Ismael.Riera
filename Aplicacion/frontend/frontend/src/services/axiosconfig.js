@@ -9,7 +9,6 @@ export const getBaseUrl = () => {
 const instance = axios.create({
   baseURL: getBaseUrl(),
   headers: {
-    "Content-type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": "true",
   },

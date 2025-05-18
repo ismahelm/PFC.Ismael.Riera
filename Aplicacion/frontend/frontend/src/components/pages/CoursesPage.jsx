@@ -2,37 +2,38 @@ import React, { useEffect, useState } from "react";
 import CourseList from "../organisms/CourseList";
 import DrawerMenu from '../organisms/DrawerMenu';
 import useAuthStore from "../../contexts/AuthContext";
+import Title from "../atoms/Title/Title";
 
 export default function CoursesPage() {
   const user = useAuthStore((state) => state.user);
-  const getCourses = useAuthStore((state) => state.getCourses); // Función para obtener los cursos
-  const [courses, setCourses] = useState([]);  // Almacenar cursos aquí
-  const [loading, setLoading] = useState(true);  // Para manejar el estado de carga
+  const getCourses = useAuthStore((state) => state.getCourses); 
+  const [courses, setCourses] = useState([]);  
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchCourses = async () => {
       if (user) {
         try {
-          const response = await getCourses(user.id);  // Esperamos la respuesta
+          const response = await getCourses(user.id);  
           setCourses(response.progressList.progressList);  
         } catch (error) {
           console.error("Error al obtener cursos:", error);
         } finally {
-          setLoading(false);  // Terminamos de cargar
+          setLoading(false);  
         }
       }
     };
 
-    fetchCourses();  // Llamamos a la función para obtener cursos
-  }, [user, getCourses]);  // Ejecutamos el efecto cuando `user` cambie
+    fetchCourses(); 
+  }, [user, getCourses]);  
 
   if (loading) {
-    return <div>Loading...</div>;  // Muestra un mensaje de carga mientras esperas los datos
+    return <div>Loading...</div>; 
   }
 
   return (
     <>
-      <h2>CoursesPage</h2>
+    <Title text={"YOUR COURSES"} fontSize={"55px"} weight={800}/>
       {courses!=null&&
          <CourseList courses={courses}
          /> 

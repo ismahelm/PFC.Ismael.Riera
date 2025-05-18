@@ -28,6 +28,19 @@ export default (sequelize, DataTypes) => {
         notEmpty: true,  // Validamos que no esté vacío
       }
     },
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: false,  // Aseguramos que el nombre de usuario sea único
+      validate: {
+        notEmpty: true,  // Validamos que no esté vacío
+      }
+    },
+    imageId: {
+      type: DataTypes.STRING,
+      unique: false,  // Aseguramos que el nombre de usuario sea único
+     
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,

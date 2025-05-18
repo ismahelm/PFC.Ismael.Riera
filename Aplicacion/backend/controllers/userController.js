@@ -1,97 +1,58 @@
 import {
   seeProfile,
   updateMyProfile,
-  seeCourseById,
-  seeCourseByName,
   seeMyProgress,
-  seeCertificates,
-  completeCourse,
-  getTestByCourse,
-  correctTest,
-  seeCourseFile
 } from "../bussiness/userService.js";
 
 export const seeMyProfile = async (req, res) => {
   try {
     const userId = req.user.id;
+
+    // Validación si el userId no está presente
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "User not authenticated" });
+    }
+
     const profile = await seeProfile(userId);
     return res.status(200).json({
+      success: true,
       profile,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-export const testCorrection = async(req,res) =>{
-  try {
-    const testcorrection = await correctTest(req.body)
-    return res.status(200).json({
-      testcorrection,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-
-  }
-}
-export const getTest = async(req,res) =>{
-  try {
-    const testQuestions = await getTestByCourse(req.body);
-    res.status(200).json({ courseInfo: testQuestions });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-export const courseFile = async (req, res) => {
-  try {
-    const courseInfo = await seeCourseFile(req.body.courseId);
-    console.log(courseInfo)
-    res.status(200).json({ courseFile:  "https://drive.google.com/file/d/"+courseInfo+"/preview"
-    });
-  } catch (error){
-    res.status(500).json({ message: error.message });
-  }
-};
-export const CourseInfoName = async (req, res) => {
-  try {
-    const courseInfo = await seeCourseByName(req.body.courseName);
-    res.status(200).json({ courseInfo: courseInfo });
-  } catch {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ success: false, message: "Error fetching profile: " + error.message });
   }
 };
 
-
-export const completeProgress = async (req, res) => {
-  try {
-    const completedProgress = await completeCourse(req.body);
-    res.status(200).json({  message: "success", completedProgress});
-  } catch (error){
-    res.status(500).json({ message: error.message+req.body });
-  }
-};
-export const checkMyCertificates = async (req, res) => {
-  try {
-    const todo = await seeCertificates(req.body);
-    return res.status(200).json({ todo });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
 export const updateProfile = async (req, res) => {
   try {
-    const updatedProfile = await updateMyProfile(
-req.body
-    );
-    return res.status(200).json({ updatedProfile });
+    // Validación de datos
+    const { newEmail, newUserName, newPassword } = req.body;
+    if (!newEmail || !newUserName || !newPassword) {
+      return res.status(400).json({ success: false, message: "All fields (newEmail, newUserName, newPassword) are required" });
+    }
+
+    const updatedProfile = await updateMyProfile(req.body);
+    return res.status(200).json({
+      success: true,
+      updatedProfile,
+    });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ success: false, message: "Error updating profile: " + error.message });
   }
 };
+
 export const seeProgress = async (req, res) => {
   try {
+    const { userId } = req.body;
+
+    // Validación de userId
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "User ID is required" });
+    }
+
     const progressList = await seeMyProgress(req.body);
-    return res.status(200).json({ message: "success", progressList });
+    return res.status(200).json({ success: true, message: "Progress fetched successfully", progressList });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ success: false, message: "Error fetching progress: " + error.message });
   }
 };

@@ -5,13 +5,15 @@ meta {
 }
 
 post {
-  url: http://localhost:5000/user/myProgress
+  url: http://localhost:5000/train/createCourse
   body: json
-  auth: none
+  auth: basic
 }
 
 body:json {
-  {
-    "userId": "4"
+  { "course_id": 3,
+        "question": "soy listo?",
+        "options": {"a": "si", "b": "no"},
+        "correct_answer": "a"
   }
 }

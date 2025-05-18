@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Tests', [
       {
-        course_id: 1,
+        course_id: 3,
         question_text: '¿Qué es JavaScript?',
         options: JSON.stringify({
           a: 'Un lenguaje de programación',
@@ -14,7 +14,7 @@ module.exports = {
         correct_answer: 'a',
       },
       {
-        course_id: 1,
+        course_id: 3,
         question_text: '¿Cuál es el resultado de 2 + "2" en JavaScript?',
         options: JSON.stringify({
           a: '22',
@@ -24,7 +24,7 @@ module.exports = {
         correct_answer: 'a',
       },
       {
-        course_id: 1,
+        course_id: 3,
         question_text: '¿Qué método se usa para imprimir en consola?',
         options: JSON.stringify({
           a: 'console.log()',

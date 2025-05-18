@@ -1,23 +1,26 @@
 import {React} from "react"
 import {TextField} from "@mui/material"
-const CustomTextField = ({placeholder, value, onChange, name, type}) =>{
+const CustomTextField = ({placeholder, value, onChange, name, type, width, height}) =>{
  return (
     <TextField placeholder={placeholder} value={value} onChange={onChange} name={name} type={type} 
     sx={{
-      width: "300px",
-      /*
+      width: width,
+      height: height,
+      "& .MuiInputBase-input": {
+        textAlign: "center", // Centra el texto del placeholder
+      },
       "& .MuiOutlinedInput-root": {
         "& fieldset": {
-          borderColor: "primary.main", // aquí aplicas el color del theme
+          borderColor: "textInput.base", // Color del borde
         },
         "&:hover fieldset": {
-          borderColor: "primary.dark", // opcional para hover
+          borderColor: "textInput.hover", // Borde al hacer hover
         },
         "&.Mui-focused fieldset": {
-          borderColor: "primary.main", // al hacer focus
+          borderColor: "textInput.selected", // Borde al hacer focus
         },
       },
-*/
+
     }}/>
  )
 }

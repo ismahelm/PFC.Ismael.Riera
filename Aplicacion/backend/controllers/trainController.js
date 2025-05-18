@@ -4,85 +4,137 @@ import {
   assignCourse,
   createCourse,
   watchResults,
-  assignmentList,
-  deleteUser, deleteCourse, userId
+  deleteUser,
+  deleteCourse,
+  userId,
+  getProgressByUser
 } from "../bussiness/trainService.js";
+import { uploadImageToDrive } from "../bussiness/googleDriveService.js";
+// Función común para enviar respuestas
+const sendResponse = (res, status, success, message, data = null) => {
+  return res.status(status).json({
+    success,
+    message,
+    data
+  });
+};
 
 export const resultList = async (req, res) => {
   try {
     const list = await watchResults(req.body);
-    res.status(200).json({ message: "succes", list });
+    sendResponse(res, 200, true, "Success", list);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };
-export const deleteAUser = async (req,res) =>{
+
+export const progressList = async (req, res) => {
   try {
-    const deletedUser = await deleteUser(req.body)
-    res.status(200).json({ message: "succes"});
-
+    const list = await getProgressByUser();
+    sendResponse(res, 200, true, "Success", list);
   } catch (error) {
-    res.status(500).json({ message: error.message });
-
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
-}
+};
 
-export const deleteACourse = async (req,res) =>{
+export const deleteAUser = async (req, res) => {
   try {
-    const deletedCourser = await deleteCourse(req.body)
-    res.status(200).json({ message: "succes"});
-
+    await deleteUser(req.body);
+    sendResponse(res, 200, true, "User deleted successfully");
   } catch (error) {
-    res.status(500).json({ message: error.message });
-
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
-}
+};
+
+export const deleteACourse = async (req, res) => {
+  try {
+    await deleteCourse(req.body);
+    sendResponse(res, 200, true, "Course deleted successfully");
+  } catch (error) {
+    sendResponse(res, 500, false, "Error: " + error.message);
+  }
+};
+
 export const watchAssignments = async (req, res) => {
   try {
     const list = await assignmentList(req.body);
-    res.status(200).json({ message: "succes", list });
+    sendResponse(res, 200, true, "Success", list);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };
+
 export const getUsersList = async (req, res) => {
   try {
     const list = await userList();
-    res.status(200).json({ message: "succes", list });
+    sendResponse(res, 200, true, "Success", list);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };
+
 export const getUserId = async (req, res) => {
   try {
     const userid = await userId(req.body.userName);
-    res.status(200).json({ message: "succes", userid });
+    sendResponse(res, 200, true, "Success", { userid });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };
+
 export const createACourse = async (req, res) => {
+  const { title, description, certificate_validity, score_required, optional } = req.body;
+  if (!req.file) {
+    return sendResponse(res, 400, false, "File is required for the course");
+  }
+  const score = Number(score_required);
+
+  const file = req.file;
   try {
-    console.log(req.body);
-    const newCourse = await createCourse(req.body);
-    res.status(200).json({ message: "succes", newCourse });
+    const newCourse = await createCourse({
+      title,
+      description,
+      certificate_validity,
+      score_required,
+           file_path: file.path,
+
+      optional: optional === 'true',
+      originalFileName: file.originalname,
+    });
+
+    sendResponse(res, 200, true, "Course created successfully", { newCourse });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };
+
 export const newProgress = async (req, res) => {
   try {
     const newAssignment = await assignCourse(req.body);
-    res.status(200).json({ message: "succes", newAssignment });
+    sendResponse(res, 200, true, "Assignment created successfully", { newAssignment });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };
+
 export const newUser = async (req, res) => {
   try {
+    if (!req.file) {
+      return sendResponse(res, 400, false, "Se requiere una imagen de perfil");
+    }
+
+    const file = req.file;
+
+    const uploadedImage = await uploadImageToDrive(file.path, file.originalname, file.mimetype);
+
+    req.body.profileImageDriveId = uploadedImage.id;
+    req.body.profileImageLink = uploadedImage.webViewLink;
+
+    // Guardar el usuario con los datos incluyendo el ID de la imagen
     const created = await createUser(req.body);
-    res.status(200).json({ message: "success", created });
+    sendResponse(res, 200, true, "Usuario creado correctamente", { created });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.log(error)
+    sendResponse(res, 500, false, "Error: " + error.message);
   }
 };

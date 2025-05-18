@@ -4,8 +4,15 @@ meta {
   seq: 4
 }
 
-get {
-  url: http://localhost:5000/train/list
-  body: none
+post {
+  url: http://localhost:5000/cert/getCertificate
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "userId": 5,
+    "courseId": 1
+  }
 }

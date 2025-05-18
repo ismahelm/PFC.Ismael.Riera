@@ -1,97 +1,133 @@
 import axios from "./axiosconfig.js";
 
 class AuthService {
+  // 🔐 /auth/
   async login(data) {
-    const response = await axios.post('http://localhost:5000/auth/login', {
-        username: data.userName,  // Cambié 'userName' a 'username'
-        password: data.password,
-      });    console.log(response)
-    return response
-  }
-/*
-  register(data) {
-    return axios.post("/auth/create", data);
-  }
-  me() {
-    return axios.get("/auth/me");
-  }
-
-  seeProfile() {
-    return axios.get("user/seeProfile");
-  }
-  updateProfile(data) {
-    return axios.put("/user/updateProfile", data);
-  }
-    */
-  async addCourse(data){
-    const response = await axios.post('http://localhost:5000/train/createCourse', 
-      data,  // Cambié 'userName' a 'username'
-    ); 
-  return response
-  }
- 
-  async getTest (data){
     console.log(data)
-    const response = await axios.post("http://localhost:5000/user/getTest",
-      {courseId: data},
-    )
-    console.log(response)
-    return response
+    const response = await axios.post("http://localhost:5000"+"/auth/login", {
+      username: data.userName,
+      password: data.password,
+    });
+    console.log(response);
+    return response;
   }
 
-  async correctTest (data){
-    const response = await axios.post("http://localhost:5000/user/correctTest",
-      data,
-    )
-    console.log(response)
-    return response
+  // 🎓 /cert/
+  async downloadCertificate(data) {
+    console.log(data);
+    const response = await axios.post(
+      "http://localhost:5000/cert/getCertifiCate",
+      data
+    );
+    console.log(response);
+    return response;
   }
 
-  async seeCourseFile(data)
-  {
-    const response = await axios.post("http://localhost:5000/user/seeCourseId",
-        {
-            courseId: data
-        }
-    )
-    return response.data.courseFile
+  // 📚 /courses/
+  async seeCourseFile(data) {
+    const response = await axios.post(
+      "http://localhost:5000/courses/seeCourseId",
+      { courseId: data }
+    );
+    return response.data.courseFile;
   }
 
+  async getCourseByName(data) {
+    const response = await axios.post(
+      "http://localhost:5000/courses/seeCourseName",
+      { courseName: data }
+    );
+    return response.data.courseInfo.id;
+  }
+
+  async seeCourses() {
+    const courses = await axios.get("http://localhost:5000/courses/seeCourses");
+    return courses;
+  }
+
+  // 🧪 /test/
+  async getTest(data) {
+    console.log(data);
+    const response = await axios.post("http://localhost:5000/test/getTest", {
+      courseId: data,
+    });
+    console.log(response);
+    return response;
+  }
+
+  async correctTest(data) {
+    const response = await axios.post(
+      "http://localhost:5000/test/correctTest",
+      data
+    );
+    console.log(response);
+    return response;
+  }
+
+  // 🧑 /user/ falta update y get profile
   async getCourses(data) {
-    const response = await axios.post('http://localhost:5000/user/myProgress', {
-        userId: data,  // Cambié 'userName' a 'username'
-      }); 
-    return response
+    const response = await axios.post("http://localhost:5000/user/myProgress", {
+      userId: data,
+    });
+    return response;
+  }
+  async getProfile(data) {
+    const response = await axios.post(
+      "http://localhost:5000/user/seeProfile",
+      data
+    );
+    return response;
+  }
+  // 🛠️ /train/ - falta deletes y resultlist
+  async addCourse(data) {
+    console.log(data);
+    const response = await axios.post(
+      "http://localhost:5000/train/createCourse",
+      data
+    );
+    return response;
   }
 
-async getCourseByName(data) {
-    const response = await axios.post('http://localhost:5000/user/seeCourseName', {
-        courseName: data,
-      })
-    return response.data.courseInfo.id
-}
- async getUserId(data) {
-    const response = await axios.post('http://localhost:5000/train/getId', 
-       { userName: data}  // Cambié 'userName' a 'username'
-      );
-      return response.data.userid
+  async addTest(data) {
+    const response = await axios.post(
+      "http://localhost:5000/train/addTest",
+      data
+    );
+    return response;
+  }
 
- }
- async assignCourse (data){
+  async addUser(data) {
     console.log(data)
-    const response = await axios.post('http://localhost:5000/train/assignCourse', 
-        data
-       );
-       console.log(response)
- }
-  async addUser(data){
-  const response = await axios.post('http://localhost:5000/train/signin', 
-    data,  // Cambié 'userName' a 'username'
-  ); 
-return response
-
+    const response = await axios.post(
+      "http://localhost:5000/train/signin",
+      data
+    );
+    return response;
   }
 
+  async assignCourse(data) {
+    const serverHost = import.meta.env.VITE_SERVER_HOST;
 
+    const response = await axios.post(serverHost + "/train/assignCourse", data);
+    return response;
+  }
+
+  async getUserId(data) {
+    const response = await axios.post("http://localhost:5000/train/getId", {
+      userName: data,
+    });
+    return response.data.userid;
+  }
+
+  async getUsers() {
+    const response = await axios.get("http://localhost:5000/train/list");
+    return response;
+  }
+
+  async seeAssignments() {
+    const courses = await axios.get("http://localhost:5000/train/progressList");
+    return courses;
+  }
 }
+
 export default new AuthService();

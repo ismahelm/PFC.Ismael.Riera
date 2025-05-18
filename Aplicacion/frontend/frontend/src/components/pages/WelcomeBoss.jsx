@@ -1,16 +1,21 @@
-import useAuthStore from '../../contexts/AuthContext';
+import { Grid } from '@mui/material';
 import DrawerMenu from '../organisms/DrawerMenu';
 export default function WelcomeBoss()
 {
-    const username = useAuthStore((state) => state.username)
-    const pass = useAuthStore((state) => state.password)
+
 
     return(
         <>
+        <Grid sx={{
+            border: "solid black 2px",
+            width: "500px",
+            height: "400px"
+        }}>
+
+
+        </Grid>
        <DrawerMenu/>
-       welcome bosss
-username: {username}
-password: {pass}
+      
    </>
     )
     

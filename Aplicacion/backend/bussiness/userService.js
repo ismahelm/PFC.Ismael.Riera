@@ -1,91 +1,55 @@
-import jwt from "jsonwebtoken";
 import db from "../models/index.js"; // Importar db desde index.js
-import bcrypt from "bcrypt";
-import { generateCertificate } from "./certificateGenerator.js";
-import { uploadPdfToDrive } from "./googleDriveService.js"; // Ajusta la ruta si es necesario
+import bcrypt from "bcrypt"; // Asegúrate de importar bcrypt si no lo tienes ya en tu archivo
 
-export const seeProfile = async ({ id }) => {
+// Ver el perfil de un usuario
+export const seeProfile = async ( data ) => {
   try {
-    console.log({ id });
-    const user = await db.User.findByPk(id);
+    console.log(data );
+    const user = await db.User.findByPk(data);
     if (!user) {
       throw new Error("User not found");
     }
     return {
       id: user.id,
+      position: user.position,
       email: user.email,
+      imageURL: "https://drive.google.com/file/d/"+user.imageId+"/preview",
+      role: user.role,
+      membersince: user.created_at,
       username: user.username,
+      fullname: user.fullname,
     };
   } catch (error) {
-    throw new Error("error en seemyprofile" + error);
+    console.error("Error en seeProfile:", error);
+    throw new Error("Error en seeProfile: " + error.message);
   }
 };
 
+// Ver el progreso de un usuario en los cursos
 export const seeMyProgress = async ({ userId }) => {
-
-
   try {
-      const today = new Date();
+    const today = new Date();
 
-  // Actualizamos progresos caducados
-  const progressList = await db.Progress.findAll({
-    where: { user_id: userId },
-    include: [{ model: db.Course, attributes: ["title"] }]
-  });
+    // Actualizamos progresos caducados
+    const progressList = await db.Progress.findAll({
+      where: { user_id: userId },
+      include: [{ model: db.Course, attributes: ["title"] }],
+    });
 
-  for (let progress of progressList) {
-    if (progress.validity && new Date(progress.validity) < today && progress.status) {
-      await progress.update({ status: false });
+    for (let progress of progressList) {
+      if (progress.validity && new Date(progress.validity) < today && progress.status) {
+        await progress.update({ status: false });
+      }
     }
-  }
-  return {
-    progressList
-  };
+
+    return { progressList };
   } catch (error) {
-    throw new Error(error);
-    
+    console.error("Error en seeMyProgress:", error);
+    throw new Error("Error en seeMyProgress: " + error.message);
   }
 };
 
-export const seeCertificates = async ({ userId }) => {
-  try {
-     const certificateList = await db.Certificate.findAll({
-    where: { user_id: userId },
-  });
-  return certificateList;
-  } catch (error) {
-    throw new Error(error);
-
-  }
- 
-};
-export const seeCourseById = async (courseId) => {
-  try {
-    const courseInfo = await db.Course.findByPk(courseId);
-
-    return courseInfo.dataValues;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-export const seeCourseFile = async (courseId) => {
-  try {
-    const courseInfo = await db.Course.findByPk(courseId);
-    return courseInfo.dataValues.file_path;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-export const seeCourseByName = async (name) => {
-  try {
-    console.log(name);
-    const courseInfo = await db.Course.findOne({ where: { title: name } });
-    console.log(courseInfo);
-    return courseInfo;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+// Actualizar el perfil del usuario
 export const updateMyProfile = async ({
   userId,
   newEmail,
@@ -93,144 +57,39 @@ export const updateMyProfile = async ({
   newPassword,
 }) => {
   try {
+    // Verificar si el email ya está en uso
     const usedEmail = await db.User.findOne({ where: { email: newEmail } });
     if (usedEmail) {
-      throw new Error("La direccion de mail ya esta en uso");
+      throw new Error("La dirección de correo electrónico ya está en uso");
     }
 
-    const usedName = await db.User.findOne({
-      where: { username: newUserName },
-    });
+    // Verificar si el nombre de usuario ya está en uso
+    const usedName = await db.User.findOne({ where: { username: newUserName } });
     if (usedName) {
-      throw new Error("name already in use");
+      throw new Error("El nombre de usuario ya está en uso");
     }
 
+    // Buscar al usuario y actualizar su perfil
     const user = await db.User.findByPk(userId);
     if (!user) {
-      throw new Error("user not found");
+      throw new Error("Usuario no encontrado");
     }
 
-    const codedPassword = await bcrypt.hash(newPassword, 10)
+    const codedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Actualizar la información del usuario
     user.email = newEmail;
     user.username = newUserName;
     user.password = codedPassword;
     await user.save();
+
     return {
       id: user.id,
       email: user.email,
       username: user.username,
     };
   } catch (error) {
-    throw new Error("error en updatemyprofile" + error);
-  }
-};
-export const getCourseFile = async (courseId) => {
-  const course = await db.Course.findByPk(courseId);
-  if (!course || !course.file_path) {
-    throw new Error("File not found");
-  }
-  return course.file_path; // O redireccionas al enlace directamente
-};
-
-
-export const completeCourse = async ({ userId, courseId }) => {
-  try {
-    console.log("completed progress");
-    const today = new Date();
-
-    const completedCourse = await db.Course.findByPk(courseId);
-    const user = await db.User.findByPk(userId);
-    const completedProgress = await db.Progress.findOne({
-      where: { user_id: userId, course_id: courseId },
-    });
-
-    const validityDate = new Date(today);
-    validityDate.setDate(today.getDate() + completedCourse.certificate_validity);
-
-    await completedProgress.update({
-      completed_at: today,
-      validity: validityDate,
-      status: true,
-    });
-
-    // 🧾 Generar el PDF
-    const localPath = await generateCertificate(user, completedCourse);
-
-    // ☁️ Subir a Google Drive
-    const fileName = `Certificado_${user.username}_${completedCourse.title}.pdf`;
-    const driveFile = await uploadPdfToDrive(localPath, fileName);
-
-    // 📦 Guardar en la base de datos
-    const newCertificate = await db.Certificate.create({
-      user_id: userId,
-      course_id: courseId,
-      obtained_at: today,
-      file_path: driveFile.webViewLink, // o webContentLink si lo quieres descargable directamente
-      validity: validityDate,
-    });
-
-    return { completedProgress, newCertificate };
-
-  } catch (error) {
-    throw new Error("Error completando curso: " + error.message);
-  }
-};
-export const correctTest = async ({ userId, courseId, answers }) => {
-  try {
-    // 1. Obtener todas las preguntas del curso
-    const questions = await db.Test.findAll({
-      where: { course_id: courseId },
-    });
-    const courseTaken = await db.Course.findByPk(courseId);
-    const score_required = courseTaken.score_required
-    // 2. Comparar las respuestas
-    let correctCount = 0;
-    questions.forEach((question) => {
-      const userAnswer = answers[question.id]; // answers debe ser tipo { [questionId]: 'a' }
-      if (userAnswer && userAnswer === question.correct_answer) {
-        correctCount++;
-      }
-    });
-
-    const total = questions.length;
-    const score = Math.round((correctCount / total) * 100); // por ejemplo, porcentaje
-    const passed =  score>=score_required
-    const testResult = await db.TestResult.create({
-      user_id: userId,
-      course_id: courseId,
-      score: score,
-      passed: passed,
-      completed_at: new Date(),
-    });
-if (passed)
-{
-  console.log(userId+" "+courseId)
- await completeCourse({userId,courseId})
-}
-    return {
-      score,
-      correctAnswers: correctCount,
-      totalQuestions: total,
-      passed: passed, // puedes ajustar el umbral
-    };
-  } catch (error) {
-    throw new Error("Error corrigiendo test: " + error.message);
-  }
-};
-
-export const getTestByCourse = async ({courseId}) => {
-  try {
-    const questions = await db.Test.findAll({
-      where: { course_id: courseId },
-      attributes: ['id', 'question_text', 'options'], // no devolvemos correct_answer
-    });
-
-    if (!questions || questions.length === 0) {
-      throw new Error("No test found for this course");
-    }
-
-    return questions;
-  } catch (error) {
-    throw new Error("Error fetching test: " + error.message);
+    console.error("Error en updateMyProfile:", error);
+    throw new Error("Error en updateMyProfile: " + error.message);
   }
 };

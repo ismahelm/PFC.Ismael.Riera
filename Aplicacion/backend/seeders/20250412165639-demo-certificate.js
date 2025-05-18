@@ -5,14 +5,14 @@ module.exports = {
     await queryInterface.bulkInsert('Certificates', [
       {
         user_id: 1,
-        course_id: 1,
+        course_id: 3,
         obtained_at: new Date(),
         file_path: '/path/to/certificate1.pdf',
 
       },
       {
         user_id: 2,
-        course_id: 2,
+        course_id: 3,
         obtained_at: new Date(),
         file_path: '/path/to/certificate2.pdf',
 

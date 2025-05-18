@@ -12,6 +12,7 @@ const TestMaker = ({ courseId, handleClose, open }) => {
   const [answers, setAnswers] = useState({}); // Aquí almacenaremos las respuestas del usuario
 
   useEffect(() => {
+    
     const fetchTest = async () => {
         console.log(courseId)
       if (!courseId) return;
@@ -19,8 +20,8 @@ const TestMaker = ({ courseId, handleClose, open }) => {
       console.log("Test obtenido:", result.data.courseInfo);
 
       // Verifica si los datos de test están disponibles y los establece en el estado
-      if (result.data?.courseInfo) {
-        setTest(result.data.courseInfo);
+      if (result.data?.data) {
+        setTest(result.data.data);
       } else {
         console.log("Datos no válidos en test.");
       }

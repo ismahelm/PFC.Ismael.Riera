@@ -1,16 +1,20 @@
-import useAuthStore from '../../contexts/AuthContext';
 import DrawerMenu from '../organisms/DrawerMenu';
+import { Grid } from '@mui/material';
+import UserList from '../organisms/UserList';
+import Title from '../atoms/Title/Title';
 export default function WelcomeTrainer()
 {
-    const username = useAuthStore((state) => state.username)
-    const pass = useAuthStore((state) => state.password)
+
 
     return(
         <>
+    <Title text={"ASSIGNMENTS"} fontSize={"55px"} weight={800}/>
+
+            <UserList/>
+
+  
        <DrawerMenu/>
-       welcome bosss
-username: {username}
-password: {pass}
+
    </>
     )
     
