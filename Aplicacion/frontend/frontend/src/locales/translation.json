@@ -1,0 +1,206 @@
+{
+    "en": {
+        "navBar":{
+            "home": "Home",
+            "courses": "Courses",
+            "profile": "Profile",
+            "management": "Management"
+        },
+      "loginPage": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password"
+      },
+      "welcomePage": {},
+      "welcomeTrainerPage": {
+        "title": "Progress Tracking",
+        "headers": {"employee": "Employee", "position": "position", "memberSince": "memeber since", "courseStatus": "course status"}
+      },
+      "profilePage": {
+        "title": "Your Profile",
+        "fields": {"username": "Username","role": "Role","email": "E-mail","memberSince": "Member since"},
+        "button": "Logout"
+      },
+      "coursesPage": {
+        "title": "Your Courses",
+        "headers": {"course": "Course", "docsandquiz": "Docs & Quiz", "downloadCertificate": "Download Certificate","validity": "Status"}
+
+      },
+      "managementPage": {
+        "title": "Management",
+        "options": {"newCourse": "New course", "addQuestion": "Add Questions", "newUser": "New user","assignCourse": "Assign course"}
+      },
+      "newCourseCard": {
+        "title": "Title",
+        "description": "Description",
+        "dificulty": {
+          "title": "Difficulty",
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
+        },
+        "validity": {
+            "title": "Validity",
+          "low": "6 months",
+          "medium": "1 year",
+          "high": "2 years"
+        },
+        "selectButton":"Select file",
+        "button": "Add course"
+      },
+      "newQuestion": {
+        "selector": "Select a course",
+        "question": "Question",
+        "options": {"OptionA":"Option A", "OptionB":"Option B", "OptionC":"Option C", "OptionD":"Option D"},
+        "correct": "Correct option",
+        "button": "Add Question"
+      },
+      "newUser": {
+        "userName": "Username",
+        "fullName": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "position": "Position",
+        "role": "Role",
+        "selectimagebutton": "Select Image",
+        "button": "Add User"
+      },
+      "assignCourse": {
+        "courseSelector": "Select a course",
+        "userSelector": "Select a user",
+        "button": "Assign course"
+
+      },
+      "courseList": {
+        "course": "Course",
+        "test": "Test",
+        "certificate": "Certificate"
+      },
+      "errors": {
+        "userNotFound": "User not found",
+        "wrongPassword": "Wrong password",
+        "missingFields": "No empty fields allowed",
+        "userExists": "User already exists",
+        "emailExists": "Email already in use",
+        "courseAssigned": "Course is already assigned",
+        "courseExists": "Course already exists",
+        "questionExists": "Question already exists", 
+        "missingCertificate": "Certificate not found",
+        "notEnoughQuestions": "There are not enough questions for this course",
+        "internalIssues": "Error due to server issues",
+        "unexpectedError": "Error due to unexpected reasons",
+        "invalidRole": "Role must be user or trainer"
+      },
+      "success": {
+    "userCreated": "User created succesfully",
+    "courseCreated": "Course created succesfully",
+    "courseAssigned": "Course assigned succesfully",
+    "questionAdded": "Question added succesfully"
+},
+      "welcome": "Welcome",
+      "change_language": "Change Language"
+    },
+    "es": {
+        "navBar":{
+            "home": "Home",
+            "courses": "Cursos",
+            "profile": "Perfil",
+            "management": "Gestión"
+        },
+      "loginPage": {
+        "title": "Inicia sesión",
+        "username": "Nombre de usuario",
+        "password": "Contraseña"
+      },
+      "welcomePage": {},
+      "welcomeTrainerPage": {
+        "title": "Seguimiento",
+        "headers": {"employee": "Empleado", "position": "Cargo", "memberSince": "Miembro desde", "courseStatus": "Estado de cursos"}
+      },
+      "profilePage": {
+        "title": "Tu perfil",
+        "fields": {"username": "Usuario","role": "Rol","email": "E-mail","memberSince": "Miembro desde"},
+        "button": "Cerrar sesión"
+      },
+      "coursesPage": {
+        "title": "Tus cursos",
+        "headers": {"course": "Curso", "docsandquiz": "Teoría y práctica", "downloadCertificate": "Descargar certificado","validity": "Estado"}
+      },
+      "managementPage": {
+        "title": "Gestión",
+        "options": {"newCourse": "Nuevo curso", "addQuestion": "Añadir preguntas", "newUser": "Nuevo usuario","assignCourse": "Asignar curso"}
+      },
+      "newCourseCard": {
+        "title": "Título",
+        "description": "Descripción",
+        "dificulty": {
+          "title": "Dificultad",
+          "low": "Baja",
+          "medium": "Media",
+          "high": "Alta"
+        },
+        "validity": {
+            "title": "Validez",
+
+          "low": "6 meses",
+          "medium": "1 año",
+          "high": "2 años"
+        },
+        "selectButton":"seleccionar archivo",
+        "button": "Añadir curso"
+      },
+      "newQuestion": {
+        "selector": "Selecciona un curso",
+        "question": "Pregunta",
+        "options": {"OptionA":"Opción A", "OptionB":"Opción B", "OptionC":"Opción C", "OptionD":"Opción D"},
+        "correct": "Opción correcta",
+        "button": "Añadir pregunta"
+      },
+      "newUser": {
+        "userName": "Nombre de usuario",
+        "fullName": "Nombre completo",
+        "email": "Email",
+        "password": "Contraseña",
+        "position": "Cargo",
+        "role": "Rol",
+        "selectimagebutton": "Seleccionar imagen",
+        "button": "Añadir usuario"
+      },
+      "assignCourse": {
+        "courseSelector": "Selecciona un curso",
+        "userSelector": "Selecciona un usuario",
+        "button": "Asignar curso"
+      },
+      "courseList": {
+        "course": "Curso",
+        "test": "Test",
+        "certificate": "Certificado"
+      },
+      "errors": {
+  "userNotFound": "Usuario no encontrado",
+  "wrongPassword": "Contraseña incorrecta",
+  "missingFields": "No se permiten campos vacíos",
+  "userExists": "El usuario ya existe",
+  "emailExists": "El correo electrónico ya está en uso",
+  "courseAssigned": "El curso ya está asignado",
+  "courseExists": "El curso ya existe",
+  "questionExists": "La pregunta ya existe",
+  "missingCertificate": "Certificado no encontrado",
+  "notEnoughQuestions": "No hay suficientes preguntas para este curso",
+    "internalIssues": "Error en el servidor",
+        "unexpectedError": "Error desconocido",
+        "invalidRole": "Role must be user or trainer"
+
+},
+"success": {
+    "userCreated": "Usuario creado con éxito",
+    "courseCreated": "Curso creado con éxito",
+    "courseAssigned": "Curso asignado con éxito",
+    "questionAdded": "Pregunta añadida con éxito"
+},
+
+      "welcome": "Bienvenido",
+      "change_language": "Cambiar idioma"
+    }
+  }
+  

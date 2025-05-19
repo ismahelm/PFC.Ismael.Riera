@@ -14,6 +14,7 @@ export const seeMyProfile = async (req, res) => {
     }
 
     const profile = await seeProfile(userId);
+    /////ESTYOY INTENTANDO DESCARGAR LA PUTA FOTO
     return res.status(200).json({
       success: true,
       profile,

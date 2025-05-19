@@ -1,9 +1,10 @@
 // src/components/molecules/ImageSelector.jsx
 import { Button, Box, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-export default function ImageSelector({ file, setFile }) {
+export default function ImageSelector({ file, setFile, marginTop="10px" }) {
   const allowedTypes = ["image/png", "image/jpeg"];
-
+  const{t}=useTranslation()
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected && allowedTypes.includes(selected.type)) {
@@ -14,7 +15,7 @@ export default function ImageSelector({ file, setFile }) {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2} marginTop={marginTop}>
       <input
         accept=".png,.jpg,.jpeg"
         id="image-upload"
@@ -25,8 +26,7 @@ export default function ImageSelector({ file, setFile }) {
       />
       <label htmlFor="image-upload">
         <Button variant="contained" component="span">
-          Seleccionar imagen
-        </Button>
+        {t("newUser.selectimagebutton")}        </Button>
       </label>
       {file && (
         <Typography variant="body2" color="text.secondary">

@@ -9,7 +9,6 @@ import {
   userId,
   getProgressByUser
 } from "../bussiness/trainService.js";
-import { uploadImageToDrive } from "../bussiness/googleDriveService.js";
 // Función común para enviar respuestas
 const sendResponse = (res, status, success, message, data = null) => {
   return res.status(status).json({
@@ -104,8 +103,12 @@ export const createACourse = async (req, res) => {
 
     sendResponse(res, 200, true, "Course created successfully", { newCourse });
   } catch (error) {
-    sendResponse(res, 500, false, "Error: " + error.message);
-  }
+    if (error.message === "Missing field") {
+      return res.status(400).json({ message: "Missing field" });
+    }
+    if (error.message === "Course already exists") {
+      return res.status(409).json({ message: "Course already exists" });
+    }  }
 };
 
 export const newProgress = async (req, res) => {
@@ -113,28 +116,32 @@ export const newProgress = async (req, res) => {
     const newAssignment = await assignCourse(req.body);
     sendResponse(res, 200, true, "Assignment created successfully", { newAssignment });
   } catch (error) {
-    sendResponse(res, 500, false, "Error: " + error.message);
-  }
+    if (error.message === "Missing field") {
+      return res.status(400).json({ message: "Missing field" });
+    }
+    if (error.message === "Course already assigned") {
+      return res.status(409).json({ message: "Course already assigned" });
+    }  }
 };
 
 export const newUser = async (req, res) => {
   try {
-    if (!req.file) {
-      return sendResponse(res, 400, false, "Se requiere una imagen de perfil");
-    }
-
-    const file = req.file;
-
-    const uploadedImage = await uploadImageToDrive(file.path, file.originalname, file.mimetype);
-
-    req.body.profileImageDriveId = uploadedImage.id;
-    req.body.profileImageLink = uploadedImage.webViewLink;
-
+   
     // Guardar el usuario con los datos incluyendo el ID de la imagen
     const created = await createUser(req.body);
     sendResponse(res, 200, true, "Usuario creado correctamente", { created });
   } catch (error) {
-    console.log(error)
-    sendResponse(res, 500, false, "Error: " + error.message);
+    if (error.message === "Missing field") {
+      return res.status(400).json({ message: "Missing field" });
+    }
+    if (error.message === "User already exists") {
+      return res.status(409).json({ message: "User already exists" });
+    }
+    if (error.message === "E-mail already exists") {
+      return res.status(409).json({ message: "E-mail already exists"});
+    }
+    if (error.message === "Invalid role") {
+      return res.status(422).json({ message: "Invalid role"});
+    }
   }
 };

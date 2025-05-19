@@ -8,53 +8,136 @@ import CustomCard from "../atoms/CustomCard"
 import CustomIconButton from "../atoms/CustomIconButton/CustomIconButton"
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ImageSelector from "../molecules/ImageSelector"
-const AddUserCard = ({handleShowAddUsers})=>
+import { useTranslation } from "react-i18next"
+const AddUserCard = ({handleShowAddUsers, snackbarMessage, setSnackbarMessage,
+  snackbarSeverity, setSnackbarSeverity,
+  snackbarOpen, setSnackbarOpen
+  })=>
 {
     
         const [newUserName, setNewUserName] = useState()
         const [newFullName, setNewFullName] = useState()
         const [newFile, setNewFile] = useState(null)
-
+  const {t}=useTranslation()
         const [newPassword, setNewPassword] = useState()
         const [newEmail, setNewEmail] = useState()
         const [newPosition, setNewPosition] = useState()
         const [newRole, setNewRole] = useState()
         const createUser = useAuthStore((state)=> state.addUser)
 
-
         const addUser = async () => {
-            if (!newFile) return alert("Adjunta una imagen de perfil");
-          
-            const formData = new FormData();
-            formData.append("userName", newUserName);
-            formData.append("fullname", newFullName);
-            formData.append("password", newPassword);
-            formData.append("email", newEmail);
-            formData.append("position", newPosition);
-            formData.append("role", newRole);
-            formData.append("profileimage", newFile); // 👈 importante: mismo nombre esperado por el backend
-          
-            try {
-              await createUser(formData);
-            } catch (error) {
-              console.error("Error al añadir usuario:", error);
-              alert("Error al crear el usuario");
-            }
-          };
+          if (!newFile) return alert("Adjunta una imagen de perfil");
+        
+          const toBase64 = (file) =>
+            new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = (error) => reject(error);
+            });
+        
+          try {
+            const base64Image = await toBase64(newFile);
+         const string64 = base64Image.split(",")[1];
+            const userData = {
+              userName: newUserName,
+              fullname: newFullName,
+              password: newPassword,
+              email: newEmail,
+              position: newPosition,
+              role: newRole,
+              profileimage: string64, // 👈 base64 como string
+            };
+        
+            await createUser(userData); // <-- tu función de la store
+            setSnackbarMessage(t("success.userCreated"));
+setSnackbarSeverity("success");
+setSnackbarOpen(true);
+
+          } catch (error) {
+           
+
+            console.log("Error",error)
+
+
+            const status = error.response.status;
+      
+            if (status === 400) {
+              setSnackbarMessage(t("errors.missingFields"));
+setSnackbarSeverity("error");
+setSnackbarOpen(true);
+
+            } else if (status === 409) {
+              setSnackbarMessage(t("errors.userExists"));
+setSnackbarSeverity("error");
+setSnackbarOpen(true);
+
+            }else if (status === 422) {
+              setSnackbarMessage(t("errors.invalidRole"));
+setSnackbarSeverity("error");
+setSnackbarOpen(true);
+
+            } else if (status === 500) {
+              setSnackbarMessage(t("errors.internalIssues"));
+setSnackbarSeverity("error");
+setSnackbarOpen(true);
+
+            } else {
+              setSnackbarMessage(t("errors.unexpectedError"));
+              setSnackbarSeverity("error");
+              setSnackbarOpen(true);            }
+      
+            setSnackbarOpen(true); // abre Snackbar
+      
+
+
+          }
+        };
 
     return(
         <>
-        <CustomCard>
+        <CustomCard >
             <CustomIconButton onClick={handleShowAddUsers} icon={KeyboardArrowUpIcon}/>                
-                <TextInput placeholder="new User name" type="text" value={newUserName} onChange={(e) => setNewUserName(e.target.value)} />
-                <TextInput placeholder="full name" type="text" value={newFullName} onChange={(e) => setNewFullName(e.target.value)} />
+              <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "10px"
+              }}
+              >
 
-            <TextInput placeholder="new password" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            <TextInput placeholder="new email" type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-            <TextInput placeholder="new position" type="text" value={newPosition} onChange={(e) => setNewPosition(e.target.value)} />
-            <TextInput placeholder="new role" type="text" value={newRole} onChange={(e) => setNewRole(e.target.value)} />
-                <ImageSelector file={newFile} setFile={setNewFile} />
-                     <CustomButton text={"add User"} onClick={addUser}/> 
+<Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+          
+              }}
+              >
+                <TextInput   placeholder={t("newUser.userName")} type="text" value={newUserName} onChange={(e) => setNewUserName(e.target.value)} />
+                <TextInput   placeholder={t("newUser.email")} type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+
+                <TextInput placeholder={t("newUser.password")} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+
+
+              </Box> <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column"
+              }}
+              >
+
+<TextInput   placeholder={t("newUser.fullName")} type="text" value={newFullName} onChange={(e) => setNewFullName(e.target.value)} />
+
+<TextInput   placeholder={t("newUser.position")} type="text" value={newPosition} onChange={(e) => setNewPosition(e.target.value)} />
+<TextInput placeholder={t("newUser.role")} type="text" value={newRole} onChange={(e) => setNewRole(e.target.value)} />
+
+
+              </Box>
+              </Box>
+              
+              
+                   <ImageSelector file={newFile} setFile={setNewFile} />
+                     <CustomButton text={t("newUser.button")} onClick={addUser}/> 
         </CustomCard>
        
         </>

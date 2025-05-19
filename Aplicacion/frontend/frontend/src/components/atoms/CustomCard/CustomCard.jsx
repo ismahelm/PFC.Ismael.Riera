@@ -1,6 +1,6 @@
 import { Card } from "@mui/material";
 
-const CustomCard=({width,heigth, children, direction="column"})=>{
+const CustomCard=({width="600px",heigth="350px", children, direction="column"})=>{
     return(
         <Card
         sx={{
@@ -9,7 +9,7 @@ const CustomCard=({width,heigth, children, direction="column"})=>{
             display: "flex",
             flexDirection: direction,
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center", padding: "5px"
         }}
         >
                 {children}

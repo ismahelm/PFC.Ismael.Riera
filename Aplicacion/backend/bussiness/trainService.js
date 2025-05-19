@@ -93,11 +93,16 @@ export const getProgressByUser = async () => {
 
 export const assignCourse = async ({ userId, courseId }) => {
   try {
+    if (!userId||!courseId)
+      {
+        throw new Error("Missing field");
+  
+      }
     const courseIsAssigned = await db.Progress.findOne({
       where: { user_id: userId, course_id: courseId },
     });
     if (courseIsAssigned) {
-      throw new Error("El curso ya está asignado.");
+      throw new Error("Course already assigned");
     }
 
     const today = new Date();
@@ -147,9 +152,14 @@ export const createCourse = async ({
   originalFileName,
 }) => {
   try {
+    if (!title||!description||!certificate_validity||!score_required||!optional)
+      {
+        throw new Error("Missing field");
+  
+      }
     const courseExists = await db.Course.findOne({ where: { title } });
     if (courseExists) {
-      throw new Error("El curso ya existe.");
+      throw new Error("Course already exists");
     }
 
     const uploadedFile = await uploadPdfToDrive(file_path, originalFileName);
@@ -167,8 +177,7 @@ export const createCourse = async ({
 
     return newCourse;
   } catch (error) {
-    console.error("Error creating course:", error);
-    throw new Error("No se pudo crear el curso.");
+    throw new Error(error.message);
   }
 };
 
@@ -179,23 +188,28 @@ export const createUser = async ({
   password,
   position,
   role,
-  profileImageDriveId,
-  profileImageLink
+  profileimage
 }) => {
   try {
-    console.log(profileImageLink)
+    if (!userName||!fullname||!email||!password||!position||!role||!profileimage)
+    {
+      throw new Error("Missing field");
+
+    }
+
+
     const userExists = await db.User.findOne({ where: { username: userName } });
     if (userExists) {
-      throw new Error("El usuario ya existe.");
+      throw new Error("User already exists");
     }
 
     const emailExists = await db.User.findOne({ where: { email } });
     if (emailExists) {
-      throw new Error("El correo ya está en uso.");
+      throw new Error("E-mail already exists");
     }
 
     if (!["user", "trainer"].includes(role)) {
-      throw new Error("Rol inválido.");
+      throw new Error("Invalid role");
     }
 
     const codedPassword = await bcrypt.hash(password, 10);
@@ -207,7 +221,7 @@ export const createUser = async ({
       password: codedPassword,
       position,
       role,
-      imageId: profileImageDriveId,
+      imageId: profileimage,
     });
 
     return {

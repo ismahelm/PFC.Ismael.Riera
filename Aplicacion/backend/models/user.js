@@ -37,7 +37,7 @@ export default (sequelize, DataTypes) => {
       }
     },
     imageId: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       unique: false,  // Aseguramos que el nombre de usuario sea único
      
     },

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select, Box, CircularProgress } from "@mui/material";
 import useAuthStore from "../../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
-const UserSelector = ({ onUserChange }) => {
+const UserSelector = ({ onUserChange, width, marginBottom }) => {
+  const {t}=useTranslation()
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const getUsers = useAuthStore((state) => state.seeUsers);
@@ -30,13 +32,17 @@ const UserSelector = ({ onUserChange }) => {
   }
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="user-selector-label">Selecciona un usuario</InputLabel>
+    <FormControl >
+      <InputLabel id="user-selector-label">{t("assignCourse.userSelector")}</InputLabel>
       <Select
         labelId="user-selector-label"
         id="user-selector"
         onChange={(e) => onUserChange(e.target.value)}
         label="Selecciona un usuario"
+        sx={{
+          width: width,
+          marginBottom: marginBottom
+        }}
       >
         <MenuItem value="">
           <em>-- Usuario --</em>

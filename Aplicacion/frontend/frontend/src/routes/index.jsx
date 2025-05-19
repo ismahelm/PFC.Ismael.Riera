@@ -2,7 +2,6 @@ import LoginPage from "../components/pages/LoginPage";
 import ProfilePage from "../components/pages/ProfilePage";
 import AuthRoute from "./AuthRoute"; 
 import RoleRoute from "./RoleRoute";
-import OptionsPage from "../components/pages/OptionsPage";
 import CoursesPage from "../components/pages/CoursesPage";
 import WelcomePage from "../components/pages/WelcomePage";
 import Management from "../components/pages/Management"; 
@@ -16,10 +15,6 @@ const routes = [
   {
     path: "profile",
     element: <AuthRoute element={<ProfilePage />} />,
-  },
-  {
-    path: "options",
-    element: <AuthRoute element={<OptionsPage />} />,
   },
   {
     path: "courses",

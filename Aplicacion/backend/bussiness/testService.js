@@ -4,6 +4,17 @@ import { completeCourse } from "./courseService.js";
 // Agregar un nuevo test
 export const addtest = async (data) => {
   try {
+    if (!data.test_id||!data.question||!data.options||!data.correct_answer)
+    {
+      throw new Error("Missing field");
+
+    }
+    const questionsexists = await db.Test.findOne({where: {question_text: data.question}})
+    if (questionsexists)
+    {
+      throw new Error("Question already exists");
+
+    }
     const newTest = await db.Test.create({
       course_id: Number(data.test_id),
       question_text: data.question,
@@ -12,8 +23,7 @@ export const addtest = async (data) => {
     });
     return newTest;
   } catch (error) {
-    console.error("Error agregando test:", error);
-    throw new Error("Error agregando test: " + error.message);
+    throw new Error(error.message);
   }
 };
 
@@ -81,8 +91,8 @@ export const getTestByCourse = async ({ courseId }) => {
       attributes: ["id", "question_text", "options"],
     });
 
-    if (!questions || questions.length === 0) {
-      throw new Error("No se encontraron preguntas para este curso.");
+    if (!questions || questions.length < 10) {
+      throw new Error("Not enough questions for this course");
     }
 
     // Mezclar las preguntas y seleccionar 10 aleatoriamente
@@ -91,8 +101,7 @@ export const getTestByCourse = async ({ courseId }) => {
 
     return selected;
   } catch (error) {
-    console.error("Error obteniendo el test:", error);
-    throw new Error("Error obteniendo el test: " + error.message);
+    throw new Error(error.message);
   }
 };
 

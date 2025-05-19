@@ -8,7 +8,7 @@ const trainRouter = express.Router();
 const upload = multer({ dest: 'uploads/' }); // Guarda archivos temporalmente
 trainRouter.post("/createCourse",authenticateToken, requireTrainerRole, upload.single('file'),  createACourse)
 trainRouter.post("/addTest",authenticateToken, requireTrainerRole, addATest)
-trainRouter.post("/signin", authenticateToken, requireTrainerRole,upload.single('profileimage'), newUser)
+trainRouter.post("/signin", authenticateToken, requireTrainerRole, newUser)
 trainRouter.post("/assignCourse",authenticateToken, requireTrainerRole, newProgress)
 trainRouter.post("/getId", getUserId)
 trainRouter.get("/list",authenticateToken, requireTrainerRole, getUsersList)

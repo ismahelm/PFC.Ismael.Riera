@@ -1,5 +1,6 @@
 // src/components/molecules/FileSelector.jsx
 import { Button, Box, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function FileSelector({ file, setFile }) {
   const allowedTypes = [
@@ -7,7 +8,7 @@ export default function FileSelector({ file, setFile }) {
     "application/vnd.ms-powerpoint",
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
   ];
-
+  const {t}= useTranslation()
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected && allowedTypes.includes(selected.type)) {
@@ -29,7 +30,7 @@ export default function FileSelector({ file, setFile }) {
       />
       <label htmlFor="pdf-upload">
         <Button variant="contained" component="span">
-          Seleccionar archivo
+          {t("newCourseCard.selectButton")}
         </Button>
       </label>
       {file && (

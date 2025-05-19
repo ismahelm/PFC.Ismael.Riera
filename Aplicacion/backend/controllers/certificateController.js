@@ -17,9 +17,8 @@ export const getCertificate = async (req, res) => {
       route: `https://drive.google.com/uc?export=download&id=${downloadRoute}`
     });
   } catch (error) {
-    // Mejor manejo de errores con mensaje detallado
-    return res.status(500).json({
-      message: "An error occurred while downloading the certificate: " + error.message
-    });
+    if (error.message === "Certificate not found") {
+      return res.status(400).json({ message: "Certificate not found" });
+    }
   }
 };

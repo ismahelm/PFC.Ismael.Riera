@@ -3,6 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import Title from "../Title/Title";
 
 const CustomIconButton = ({
+  reverse=false,
   text,
   onClick,
   color = "secondary",
@@ -36,8 +37,20 @@ const CustomIconButton = ({
 },
       }}
     >
+    {(reverse)?
+
+      <> <Title text={text} fontSize={"25px"} weight={"bold"}/>
+       <Icon sx={{ fontSize: fontSize}} /> 
+      </>
+    :
+      <>
+       <Icon sx={{ fontSize: fontSize}} />  <Title text={text} weight={"bold"} fontSize={"25px"}/>
+      </>
     
-      <Icon sx={{ fontSize: fontSize}} />  <Title text={text}/>
+    }
+
+    
+     
     </IconButton>
   );
 };

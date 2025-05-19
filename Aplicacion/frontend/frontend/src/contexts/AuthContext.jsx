@@ -74,6 +74,7 @@ const useAuthStore = create((set, get) => ({
       return res.data;
     } catch (error) {
       console.error("Fetching courses failed:", error);
+      throw error;
     }
   },
   seeCourses: async () => {
@@ -111,7 +112,7 @@ const useAuthStore = create((set, get) => ({
       const res = await AuthService.addTest(data);
       return res.data;
     } catch (error) {
-      console.error("addTest failed:", error);
+      console.error( error);
 
       throw error;
     }

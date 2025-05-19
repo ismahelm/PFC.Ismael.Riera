@@ -8,7 +8,7 @@ const DrawerContent = ({routeNames})=>
         navigate(route)
     }
     return(
-<List>
+<List sx={{ display: "flex", flexDirection: "row",}}>
     {routeNames.map((item, index) => (
 
 <ListItem key={index} onClick={()=>handleNavigation(item.path)}>

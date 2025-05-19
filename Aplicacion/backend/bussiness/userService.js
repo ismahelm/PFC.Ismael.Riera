@@ -1,10 +1,8 @@
 import db from "../models/index.js"; // Importar db desde index.js
 import bcrypt from "bcrypt"; // Asegúrate de importar bcrypt si no lo tienes ya en tu archivo
-
 // Ver el perfil de un usuario
 export const seeProfile = async ( data ) => {
   try {
-    console.log(data );
     const user = await db.User.findByPk(data);
     if (!user) {
       throw new Error("User not found");
@@ -13,7 +11,7 @@ export const seeProfile = async ( data ) => {
       id: user.id,
       position: user.position,
       email: user.email,
-      imageURL: "https://drive.google.com/file/d/"+user.imageId+"/preview",
+      image64: user.imageId,
       role: user.role,
       membersince: user.created_at,
       username: user.username,

@@ -9,7 +9,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Username and password are required" });
     }
 
-    const { token, role } = await loginMe(req.body);
+    const { token, role } = await loginMe(req.body, res);
 
     return res.status(200).json({
       message: `Login successful for ${username} with role ${role}`,
@@ -17,7 +17,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     // Mejor manejo de errores específicos
-    if (error.message === "user not found") {
+    if (error.message === "User not found") {
       return res.status(404).json({ message: "User not found" });
     }
     if (error.message === "Wrong password") {

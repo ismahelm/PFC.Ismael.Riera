@@ -1,6 +1,6 @@
 import { Typography, useTheme } from "@mui/material";
 
-const Title = ({ width, text, fontSize, fontColor ="text.secondary", weight, italic=false}) => {
+const Title = ({ width, text, marginLeft, fontSize, fontColor ="text.secondary", weight, italic=false}) => {
   const theme = useTheme(); // Obtenemos el tema actual (claro u oscuro)
 
     return <Typography
@@ -10,6 +10,7 @@ const Title = ({ width, text, fontSize, fontColor ="text.secondary", weight, ita
       fontSize: fontSize,
       fontWeight: weight,
       fontStyle: italic ? "italic" : "normal", // 👈 aquí añadimos cursiva
+      ml: marginLeft
     }}
     >{text}</Typography>;
   };

@@ -8,9 +8,14 @@ export const downloadCertificate = async ({ userId, courseId }) => {
     const certificate = await db.Certificate.findOne({
       where: { user_id: userId, course_id: courseId },
     });
+    if (!certificate)
+    {
+      throw new Error("Certificate not found");
+
+    }
     return certificate.file_path;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 };
 

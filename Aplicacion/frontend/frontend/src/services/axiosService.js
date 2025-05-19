@@ -80,11 +80,11 @@ class AuthService {
   }
   // 🛠️ /train/ - falta deletes y resultlist
   async addCourse(data) {
-    console.log(data);
     const response = await axios.post(
       "http://localhost:5000/train/createCourse",
       data
     );
+    console.log("yee")
     return response;
   }
 

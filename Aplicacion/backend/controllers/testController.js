@@ -4,10 +4,6 @@ export const addATest = async (req, res) => {
   try {
     const { test_id, question, options, correct_answer } = req.body;
 
-    // Validación de parámetros
-    if (!test_id || !question || !options || !correct_answer) {
-      return res.status(400).json({ success: false, message: "All fields are required" });
-    }
 
     const testAddition = await addtest(req.body);
     return res.status(200).json({
@@ -15,10 +11,12 @@ export const addATest = async (req, res) => {
       data: testAddition,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error adding test: " + error.message,
-    });
+    if (error.message === "Missing field") {
+      return res.status(400).json({ message: "Missing field" });
+    }
+    if (error.message === "Question already exists") {
+      return res.status(409).json({ message: "Question already exists" });
+    }
   }
 };
 
@@ -59,9 +57,11 @@ export const getTest = async (req, res) => {
       data: testQuestions,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error fetching test questions: " + error.message,
-    });
+    if (error.message === "Missing field") {
+      return res.status(400).json({ message: "Missing field" });
+    }
+    if (error.message === "Not enough questions for this course") {
+      return res.status(400).json({ message: "Not enough questions for this course" });
+    }
   }
 };
