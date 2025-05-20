@@ -12,14 +12,14 @@ const ScoreSelector = ({score, setscore}) => {
 
   return (
     <FormControl >
-      <InputLabel id="duration-label">{t("newCourseCard.dificulty.title")}</InputLabel>
+      <InputLabel id="difficulty-label">{t("newCourseCard.dificulty.title")}</InputLabel>
       <Select
-        labelId="duration-label"
+        labelId="difficulty-label"
         value={score}
-        label="Duración"
+        label="Dificultad"
         onChange={handleChange}
         sx={{
-            width: "560px"
+            width: "590px"
         }}
       >
         <MenuItem value={70}>{t("newCourseCard.dificulty.low")}</MenuItem>

@@ -1,6 +1,6 @@
 import { Card } from "@mui/material";
 
-const CustomCard=({width="600px",heigth="350px", children, direction="column"})=>{
+const CustomCard=({width="600px",heigth="300px", children, direction="column"})=>{
     return(
         <Card
         sx={{

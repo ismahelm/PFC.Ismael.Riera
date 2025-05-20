@@ -29,7 +29,7 @@ export default function FileSelector({ file, setFile }) {
         onChange={handleFileChange}
       />
       <label htmlFor="pdf-upload">
-        <Button variant="contained" component="span">
+        <Button variant="contained" component="span" >
           {t("newCourseCard.selectButton")}
         </Button>
       </label>

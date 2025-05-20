@@ -79,6 +79,7 @@ export default function Management() {
               setSnackbarSeverity={setSnackbarSeverity}
               snackbarOpen={snackbarOpen}
               setSnackbarOpen={setSnackbarOpen}
+              height={"400px"}
               />
             ) : (
               <CustomIconButton
@@ -98,6 +99,7 @@ export default function Management() {
               setSnackbarSeverity={setSnackbarSeverity}
               snackbarOpen={snackbarOpen}
               setSnackbarOpen={setSnackbarOpen}
+              height={"400px"}
               />
             ) : (
               <CustomIconButton

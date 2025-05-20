@@ -32,26 +32,39 @@ export default function ModalCard({ usercourses = [], open, closeModal }) {
           bgcolor: "background.paper",
           boxShadow: 24,
           borderRadius: 3,
-          p: 4,
           overflowY: "auto",
-          border: "2px solid grey"
+          border: "2px solid grey",
+          p: 1
         }}
       >
-      <Grid container spacing={2} sx={{marginLeft: "22%"}}>
-    
+      <Grid container sx={{ml: "40px"}}>
+         <Grid container  sx={{ width: "100%"
+               
+            }}>
+               <Grid size={5}>
+          <Title text={"Curso"} fontSize={"28px"}/>
+    </Grid>
+     <Grid size={4} >
+          <Title text={"Validez"} fontSize={"28px"}/>
+    </Grid>
+     <Grid size={3} >
+          <Title text={"Estado"} fontSize={"28px"} marginLeft={"50px"}/>
+    </Grid>
+            </Grid>
+   
           {usercourses.map((course, index) => (
-              <Grid container  spacing={6} sx={{ width: "100%",
+              <Grid container sx={{ width: "100%",
                
             }}>
             <Grid container key={index} alignItems="center">
               <Grid size={5} sx={{   display: "flex",
                 flexDirection: "row", 
               }}>
-                <Title text={course.courseTitle} width={"150px"}/>
+                <Title text={course.courseTitle} width={"630px"} />
               </Grid>
               <Grid  size={4}>
-                <Box sx={{width: "100%"}}>
-                                  <Title  width={"150px"} text={course.validity||"no completado"} />
+                <Box >
+                                  <Title   text={course.validity||"no completado"}  />
 
                 </Box>
               </Grid>

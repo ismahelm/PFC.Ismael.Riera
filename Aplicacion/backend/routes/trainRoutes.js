@@ -12,7 +12,7 @@ trainRouter.post("/signin", authenticateToken, requireTrainerRole, newUser)
 trainRouter.post("/assignCourse",authenticateToken, requireTrainerRole, newProgress)
 trainRouter.post("/getId", getUserId)
 trainRouter.get("/list",authenticateToken, requireTrainerRole, getUsersList)
-trainRouter.get("/progressList", progressList)
+trainRouter.get("/progressList", authenticateToken, progressList)
 
 
 

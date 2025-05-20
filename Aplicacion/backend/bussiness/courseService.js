@@ -1,13 +1,11 @@
-import db from "../models/index.js"; // Importar db desde index.js
+import db from "../models/index.js";
 import { generateCertificate } from "./certificateService.js";
 import { uploadPdfToDrive } from "./googleDriveService.js";
 
-// Completar curso y generar certificado
 export const completeCourse = async ({ userId, courseId }) => {
   try {
     const today = new Date();
 
-    // Obtener curso y usuario
     const completedCourse = await db.Course.findByPk(courseId);
     if (!completedCourse) throw new Error("Curso no encontrado.");
 
@@ -22,34 +20,30 @@ export const completeCourse = async ({ userId, courseId }) => {
     const validityDate = new Date(today);
     validityDate.setDate(today.getDate() + completedCourse.certificate_validity);
 
-    // Actualizar progreso del usuario
     await completedProgress.update({
       completed_at: today,
       validity: validityDate,
       status: true,
     });
 
-    // Generar certificado en PDF
     const localPath = await generateCertificate(user, completedCourse);
 
-    // Subir PDF a Google Drive
     const fileName = `Certificado_${user.username}_${completedCourse.title}.pdf`;
     const driveFile = await uploadPdfToDrive(localPath, fileName);
     const oldCertificate = await db.Certificate.findOne({
       where: { user_id: userId, course_id: courseId },
     });
 
-    // Eliminar certificado anterior si existe
+    
     if (oldCertificate) {
       await oldCertificate.destroy();
     }
 
-    // Guardar nuevo certificado en la base de datos
     const newCertificate = await db.Certificate.create({
       user_id: userId,
       course_id: courseId,
       obtained_at: today,
-      file_path: driveFile.id, // Puedes usar webContentLink si prefieres un enlace descargable
+      file_path: driveFile.id,
       validity: validityDate,
     });
 
@@ -60,7 +54,6 @@ export const completeCourse = async ({ userId, courseId }) => {
   }
 };
 
-// Ver detalles del curso por nombre
 export const seeCourseByName = async (name) => {
   try {
     const courseInfo = await db.Course.findOne({ where: { title: name } });
@@ -72,7 +65,6 @@ export const seeCourseByName = async (name) => {
   }
 };
 
-// Ver archivo del curso por ID
 export const seeCourseFile = async (courseId) => {
   try {
     const courseInfo = await db.Course.findByPk(courseId);
@@ -84,7 +76,6 @@ export const seeCourseFile = async (courseId) => {
   }
 };
 
-// Ver todos los cursos
 export const seeCourses = async () => {
   try {
     const courses = await db.Course.findAll();

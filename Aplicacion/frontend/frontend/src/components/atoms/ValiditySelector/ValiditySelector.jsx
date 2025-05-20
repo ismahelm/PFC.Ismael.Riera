@@ -18,7 +18,7 @@ const {t} = useTranslation()
         label="Duración"
         onChange={handleChange}
         sx={{
-          width: "560px",
+          width: "590px",
           marginTop: "10px",
           marginBottom: "10px"
       }}

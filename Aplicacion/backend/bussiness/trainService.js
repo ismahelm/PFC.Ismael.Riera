@@ -54,7 +54,7 @@ export const getProgressByUser = async () => {
       include: [
         {
           model: db.User,
-          attributes: ["username", "position", "id", "created_at"],
+          attributes: ["fullname", "position", "id", "created_at"],
         },
         { model: db.Course, attributes: ["title"] },
       ],
@@ -68,7 +68,7 @@ export const getProgressByUser = async () => {
       const userId = item.User.id;
       if (!grouped[userId]) {
         grouped[userId] = {
-          username: item.User.username,
+          username: item.User.fullname,
           position: item.User.position,
           createdAt: item.User.created_at,
           id: item.User.id,

@@ -1,6 +1,5 @@
-import db from "../models/index.js"; // Importar db desde index.js
-import bcrypt from "bcrypt"; // Asegúrate de importar bcrypt si no lo tienes ya en tu archivo
-// Ver el perfil de un usuario
+import db from "../models/index.js"; 
+import bcrypt from "bcrypt"; 
 export const seeProfile = async ( data ) => {
   try {
     const user = await db.User.findByPk(data);
@@ -23,12 +22,10 @@ export const seeProfile = async ( data ) => {
   }
 };
 
-// Ver el progreso de un usuario en los cursos
 export const seeMyProgress = async ({ userId }) => {
   try {
     const today = new Date();
 
-    // Actualizamos progresos caducados
     const progressList = await db.Progress.findAll({
       where: { user_id: userId },
       include: [{ model: db.Course, attributes: ["title"] }],
@@ -47,7 +44,6 @@ export const seeMyProgress = async ({ userId }) => {
   }
 };
 
-// Actualizar el perfil del usuario
 export const updateMyProfile = async ({
   userId,
   newEmail,
@@ -55,19 +51,16 @@ export const updateMyProfile = async ({
   newPassword,
 }) => {
   try {
-    // Verificar si el email ya está en uso
     const usedEmail = await db.User.findOne({ where: { email: newEmail } });
     if (usedEmail) {
       throw new Error("La dirección de correo electrónico ya está en uso");
     }
 
-    // Verificar si el nombre de usuario ya está en uso
     const usedName = await db.User.findOne({ where: { username: newUserName } });
     if (usedName) {
       throw new Error("El nombre de usuario ya está en uso");
     }
 
-    // Buscar al usuario y actualizar su perfil
     const user = await db.User.findByPk(userId);
     if (!user) {
       throw new Error("Usuario no encontrado");
@@ -75,7 +68,6 @@ export const updateMyProfile = async ({
 
     const codedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Actualizar la información del usuario
     user.email = newEmail;
     user.username = newUserName;
     user.password = codedPassword;

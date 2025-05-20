@@ -69,8 +69,11 @@ const TestMaker = ({ courseId, handleClose, open }) => {
 
     try {
       const result = await correctTest(data);
-      console.log(result);
-    } catch (error) {
+handleClose()   
+setSnackbarMessage("Test superado");
+setSnackbarOpen(true);
+
+} catch (error) {
       const status = error?.response?.status;
 
       if (status === 400) {

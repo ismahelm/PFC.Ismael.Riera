@@ -3,7 +3,6 @@ import { seeProfile } from "../bussiness/userService.js"; // Asegúrate de impor
 
 export const login = async (req, res) => {
   try {
-    // Validar los datos de entrada
     const { username, password } = req.body;
     if (!username || !password) {
       return res.status(400).json({ message: "Username and password are required" });
@@ -16,7 +15,6 @@ export const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    // Mejor manejo de errores específicos
     if (error.message === "User not found") {
       return res.status(404).json({ message: "User not found" });
     }

@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next"
 
 const AddCourseCard = ({handleShowAddCourses, snackbarMessage, setSnackbarMessage,
   snackbarSeverity, setSnackbarSeverity,
-  snackbarOpen, setSnackbarOpen
+  snackbarOpen, setSnackbarOpen, height
    }) => {
     const addcourse = useAuthStore((state)=> state.createCourse)
   const [newCourseTitle, setNewCourseTitle] = useState("")
@@ -80,11 +80,20 @@ setSnackbarOpen(true);
   }
 
   return (
-    <CustomCard
+    <CustomCard heigth={height}
     >
       <CustomIconButton onClick={handleShowAddCourses} icon ={KeyboardArrowUpIcon}/>
-      <TextInput height={"40px"} placeholder={t("newCourseCard.title")} type="text" value={newCourseTitle} onChange={(e) => setNewCourseTitle(e.target.value)} />
-      <TextInput height={"40px"} placeholder={t("newCourseCard.description")} type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+
+      <TextInput width="100%" height={"40px"} placeholder={t("newCourseCard.title")} type="text" value={newCourseTitle} onChange={(e) => setNewCourseTitle(e.target.value)} />
+      <Box
+      sx={{marginTop: "5px"}}>
+
+      </Box>
+      <TextInput width="100%" height={"40px"} placeholder={t("newCourseCard.description")} type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+     <Box
+      sx={{marginTop: "5px"}}>
+
+      </Box>
     <ScoreSelector score={newScoreRequired}setscore={setNewScoreRequired}/>
       <ValiditySelector validity={newCertificateValidity} setValidity={setNewCertificateValidity}/>
       <Box

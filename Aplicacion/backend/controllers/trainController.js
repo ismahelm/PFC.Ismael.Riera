@@ -127,7 +127,6 @@ export const newProgress = async (req, res) => {
 export const newUser = async (req, res) => {
   try {
    
-    // Guardar el usuario con los datos incluyendo el ID de la imagen
     const created = await createUser(req.body);
     sendResponse(res, 200, true, "Usuario creado correctamente", { created });
   } catch (error) {

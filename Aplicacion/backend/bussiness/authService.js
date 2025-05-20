@@ -15,6 +15,7 @@ export const loginMe = async ({ username, password, res }) => {
 
       throw new Error("Wrong password");
     }
+  
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,

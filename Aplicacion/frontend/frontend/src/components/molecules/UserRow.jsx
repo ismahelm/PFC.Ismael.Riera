@@ -9,6 +9,7 @@ import ModalCard from "../molecules/ModalCard";
 import { useState } from "react";
 
 const UserRow = ({user}) => {
+  console.log(user)
   const [openModal, setOpenModal] = useState(false)
 
   const handleOpenModal = () => setOpenModal(true);

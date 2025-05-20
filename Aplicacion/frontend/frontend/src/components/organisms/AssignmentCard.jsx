@@ -17,7 +17,7 @@ const AssignmentCard = ({
   snackbarSeverity,
   setSnackbarSeverity,
   snackbarOpen,
-  setSnackbarOpen,
+  setSnackbarOpen, height
 }) => {
   const [selectedCourse, setSelectedCourse] = useState();
   const [selectedUser, setSelectedUser] = useState();
@@ -56,11 +56,14 @@ const AssignmentCard = ({
   };
 
   return (
-    <CustomCard>
-      <CustomIconButton
+    <CustomCard heigth={height}>
+      
+             <CustomIconButton
         onClick={handleShowAssignment}
         icon={KeyboardArrowUpIcon}
       />
+      
+ 
       <UserSelector
         onUserChange={setSelectedUser}
         width={"560px"}
@@ -68,7 +71,7 @@ const AssignmentCard = ({
       />
       <CourseSelector onCourseChange={setSelectedCourse} width={"560px"} />
 
-      <CustomButton text={t("assignCourse.questionAdded")} onClick={assignCourse} />
+      <CustomButton text={t("assignCourse.button")} onClick={assignCourse} />
     </CustomCard>
   );
 };

@@ -16,7 +16,7 @@ const AddTestQuestion = ({
   snackbarSeverity,
   setSnackbarSeverity,
   snackbarOpen,
-  setSnackbarOpen,
+  setSnackbarOpen, height
 }) => {
   const [test, setTest] = useState(0);
  const {t}=useTranslation()
@@ -36,7 +36,7 @@ const AddTestQuestion = ({
         options: {
           a: newOptiona,
           b: newOptionb,
-          c: newOptiond,
+          c: newOptionc,
           d: newOptiond,
         },
         correct_answer: newCorrectAnswer,
@@ -78,7 +78,7 @@ setSnackbarOpen(true);
     setTest(courseId);
   };
   return (
-    <CustomCard>
+    <CustomCard heigth={height}>
       <CustomIconButton
         onClick={handleShowAddQuestions}
         icon={KeyboardArrowUpIcon}
