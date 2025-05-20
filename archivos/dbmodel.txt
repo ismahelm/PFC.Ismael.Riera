@@ -1,0 +1,51 @@
+Table users {
+  id integer [primary key]
+  username varchar
+  password varchar
+  email varchar
+  role varchar
+  created_at timestamp
+}
+
+Table courses {
+  id integer [primary key]
+  optional boolean
+  title varchar
+  description text
+  file_path varchar
+}
+
+Table progress {
+  id integer [primary key]
+  user_id integer [ref: > users.id]  
+  course_id integer [ref: > courses.id]  
+  completed_at timestamp
+  vigencia timestamp
+  status boolean
+  certificate_path varchar
+}
+
+Table tests {
+  id integer [primary key]
+  course_id integer [ref: > courses.id]  
+  question_text text
+  options jsonb  
+  correct_answer varchar
+}
+
+Table test_results {
+  id integer [primary key]
+  user_id integer [ref: > users.id]
+  course_id integer [ref: > courses.id]
+  score integer
+  passed boolean
+  completed_at timestamp
+}
+
+Table certificates {
+  id integer [primary key]
+  user_id integer [ref: > users.id]  
+  course_id integer [ref: > courses.id]  
+  obtained_at timestamp
+  file_path varchar
+}

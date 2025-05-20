@@ -37,17 +37,23 @@ const CustomIconButton = ({
 },
       }}
     >
-    {(reverse)?
 
-      <> <Title text={text} fontSize={"25px"} weight={"bold"}/>
-       <Icon sx={{ fontSize: fontSize}} /> 
-      </>
-    :
-      <>
-       <Icon sx={{ fontSize: fontSize}} />  <Title text={text} weight={"bold"} fontSize={"25px"}/>
-      </>
-    
-    }
+
+    {text ? (
+      reverse ? (
+        <>
+          <Title text={text} fontSize={"25px"} weight={"bold"} width={"200px"} />
+          <Icon sx={{ fontSize: fontSize }} />
+        </>
+      ) : (
+        <>
+          <Icon sx={{ fontSize: fontSize }} />
+          <Title text={text} width={"200px"} weight={"bold"} fontSize={"25px"} />
+        </>
+      )
+    ) : (
+      <Icon sx={{ fontSize: fontSize }} />
+    )}
 
     
      

@@ -83,7 +83,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#00ffff', // cian neón
+      main: '#33ffff', // cian neón
       font: '#ff4ff9', // rosa neón
     },
     background: {

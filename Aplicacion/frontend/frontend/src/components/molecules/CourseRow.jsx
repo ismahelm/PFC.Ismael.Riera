@@ -33,6 +33,7 @@ const CourseRow = ({
         alignItems={"center"}
         justifyContent={"center"}
         justifyItems={"center"}
+        gap={2}
       >
         <CustomButton
           text={t("courseList.course")}

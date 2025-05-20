@@ -49,7 +49,7 @@ const UserSelector = ({ onUserChange, width, marginBottom }) => {
         </MenuItem>
         {users.map((user, index) => (
           <MenuItem key={index} value={user.id}>
-            {user.username}
+            {user.fullname}
           </MenuItem>
         ))}
       </Select>

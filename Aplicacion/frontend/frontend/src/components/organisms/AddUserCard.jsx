@@ -137,7 +137,12 @@ setSnackbarOpen(true);
               
               
                    <ImageSelector file={newFile} setFile={setNewFile} />
-                     <CustomButton text={t("newUser.button")} onClick={addUser}/> 
+                   <Box
+                   sx={{ mt: 1}}
+                   >
+                     <CustomButton  text={t("newUser.button")} onClick={addUser}/> 
+
+                   </Box>
         </CustomCard>
        
         </>

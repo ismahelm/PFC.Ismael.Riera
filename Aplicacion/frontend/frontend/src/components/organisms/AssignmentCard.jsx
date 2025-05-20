@@ -57,21 +57,41 @@ const AssignmentCard = ({
 
   return (
     <CustomCard heigth={height}>
-      
+      <Box
+      sx={{
+        mt: 2
+      }}>
+
+      </Box>
              <CustomIconButton
         onClick={handleShowAssignment}
         icon={KeyboardArrowUpIcon}
       />
       
- 
-      <UserSelector
+   <Box
+      sx={{
+        mt: 1
+      }}>
+<UserSelector
         onUserChange={setSelectedUser}
         width={"560px"}
         marginBottom={"10px"}
       />
+      </Box>
+        <Box
+      sx={{
+        mt: 1
+      }}>
       <CourseSelector onCourseChange={setSelectedCourse} width={"560px"} />
 
+      </Box>
+  <Box
+      sx={{
+        mt: 2
+      }}>
       <CustomButton text={t("assignCourse.button")} onClick={assignCourse} />
+
+      </Box>
     </CustomCard>
   );
 };

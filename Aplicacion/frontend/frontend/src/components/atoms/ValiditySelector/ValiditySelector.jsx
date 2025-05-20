@@ -19,8 +19,7 @@ const {t} = useTranslation()
         onChange={handleChange}
         sx={{
           width: "590px",
-          marginTop: "10px",
-          marginBottom: "10px"
+         
       }}
       >
         <MenuItem value={180}>{t("newCourseCard.validity.low")}</MenuItem>

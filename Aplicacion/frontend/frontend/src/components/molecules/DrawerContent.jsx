@@ -1,5 +1,5 @@
 import React from "react";
-import {List, ListItem, ListItemText} from "@mui/material"
+import {Box, List, ListItem, ListItemText} from "@mui/material"
 import { useNavigate } from "react-router-dom";
 const DrawerContent = ({routeNames})=>
 {
@@ -10,10 +10,14 @@ const DrawerContent = ({routeNames})=>
     return(
 <List sx={{ display: "flex", flexDirection: "row",}}>
     {routeNames.map((item, index) => (
-
+<Box
+ sx={{ width: "100px"}}
+>
 <ListItem key={index} onClick={()=>handleNavigation(item.path)}>
     <ListItemText primary={item.name}/>
 </ListItem>
+</Box>
+
 
 )
     )}

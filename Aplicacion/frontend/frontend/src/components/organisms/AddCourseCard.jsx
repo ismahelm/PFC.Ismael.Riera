@@ -95,7 +95,14 @@ setSnackbarOpen(true);
 
       </Box>
     <ScoreSelector score={newScoreRequired}setscore={setNewScoreRequired}/>
+  <Box
+      sx={{
+        mt: 2
+      }}>
       <ValiditySelector validity={newCertificateValidity} setValidity={setNewCertificateValidity}/>
+
+      </Box>
+
       <Box
       sx={{marginTop: "5px"}}>
 

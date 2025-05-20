@@ -60,12 +60,12 @@ export default function Management() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: "100%"
           }}
         >
           <Box
             sx={{
               gap: "10px",
-
               display: "flex",
               flexDirection: "row",
             }}

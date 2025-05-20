@@ -14,7 +14,7 @@
       "welcomePage": {},
       "welcomeTrainerPage": {
         "title": "Progress Tracking",
-        "headers": {"employee": "Employee", "position": "position", "memberSince": "memeber since", "courseStatus": "course status"}
+        "headers": {"employee": "Employee", "position": "Position", "memberSince": "Memeber since", "courseStatus": "Course status"}
       },
       "profilePage": {
         "title": "Your Profile",

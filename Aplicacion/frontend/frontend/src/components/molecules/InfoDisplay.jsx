@@ -7,12 +7,13 @@ const InfoDisplay =({field, value})=>
         <Box
         sx={{display: "flex",
             flexDirection: "row", 
+            justifyContent: "center", alignItems: "center"
         }}
         >
             <Title text={field} fontSize={"20px"}/>
             <Title text={":"} fontSize={"20px"}/>
 
-            <Title text={value} italic fontSize={"20px"} marginLeft={"5px"}/>
+            <Title text={value} italic fontSize={"2018x"} marginLeft={"5px"}/>
 
         </Box>
     )

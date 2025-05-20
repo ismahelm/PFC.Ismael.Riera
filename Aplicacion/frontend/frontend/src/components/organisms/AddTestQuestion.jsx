@@ -150,7 +150,13 @@ setSnackbarOpen(true);
         value={newCorrectAnswer}
         onChange={(e) => setNewCorrectAnswer(e.target.value)}
       />
+        <Box
+      sx={{
+        mt: 1
+      }}>
       <CustomButton text={t("newQuestion.button")} onClick={handleSendQuestion} />
+
+      </Box>
     </CustomCard>
   );
 };
