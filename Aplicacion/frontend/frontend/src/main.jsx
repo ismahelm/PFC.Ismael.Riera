@@ -4,12 +4,12 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import useThemeStore from './contexts/AuthContext.jsx'; // <-- asegúrate de que este exporte el hook correcto
+import useThemeStore from './contexts/AuthContext.jsx'; 
 import { lightTheme, darkTheme } from './theme/index';
-import './i18n'; // 👈 Importante
+import './i18n'; 
 
 function ThemedApp() {
-  const { mode } = useThemeStore(); // ✅ Ahora está dentro de un componente React
+  const { mode } = useThemeStore(); 
   const theme = mode === 'light' ? lightTheme : darkTheme;
 
   return (

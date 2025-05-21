@@ -69,18 +69,34 @@ const TestMaker = ({ courseId, handleClose, open }) => {
 
     try {
       const result = await correctTest(data);
-handleClose()   
+      if(result.data.data.passed)
+      {
+        handleClose()
+setSnackbarSeverity("success")   
 setSnackbarMessage("Test superado");
 setSnackbarOpen(true);
+      }
+else
+{
+  setSnackbarSeverity("info")   
+setSnackbarMessage("Test no superado");
+setSnackbarOpen(true);
+}
 
 } catch (error) {
       const status = error?.response?.status;
 
       if (status === 400) {
+        setSnackbarSeverity("error")   
+
         setSnackbarMessage("Completa todas las respuestas antes de enviar.");
       } else if (status === 500) {
+        setSnackbarSeverity("error")   
+
         setSnackbarMessage("Error del servidor. Intenta más tarde.");
       } else {
+        setSnackbarSeverity("error")   
+
         setSnackbarMessage("Ocurrió un error inesperado.");
       }
 

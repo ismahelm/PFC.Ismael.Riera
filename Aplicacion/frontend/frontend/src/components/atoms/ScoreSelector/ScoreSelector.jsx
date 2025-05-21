@@ -22,9 +22,9 @@ const ScoreSelector = ({score, setscore}) => {
             width: "590px"
         }}
       >
-        <MenuItem value={70}>{t("newCourseCard.dificulty.low")}</MenuItem>
-        <MenuItem value={80}>{t("newCourseCard.dificulty.medium")}</MenuItem>
-        <MenuItem value={90}>{t("newCourseCard.dificulty.high")}</MenuItem>
+        <MenuItem value={70}>{t("newCourseCard.dificulty.low")+" (70/100)"}</MenuItem>
+        <MenuItem value={80}>{t("newCourseCard.dificulty.medium")+" (80/100)"}</MenuItem>
+        <MenuItem value={90}>{t("newCourseCard.dificulty.high")+" (90/100)"}</MenuItem>
       </Select>
     </FormControl>
   );

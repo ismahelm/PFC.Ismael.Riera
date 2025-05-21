@@ -53,7 +53,7 @@ const CourseList = ({ courses = [] }) => {
       console.error("Error al obtener el certificado:", error);
       setSnackbarMessage(t("errors.missingCertificate"));
       setSnackbarSeverity("error");
-    } finally {
+
       setSnackbarOpen(true);
     }
   };

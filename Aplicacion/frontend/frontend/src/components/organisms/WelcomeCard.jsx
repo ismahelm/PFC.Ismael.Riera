@@ -46,7 +46,7 @@ const WelcomeCard = ({ user }) => {
     </>
     :
     
-    <Title text={"PArece que tienes algún curso caducado :( "} />
+    <Title text={"Parece que tienes algún curso por realizar"} />
     
     }
 

@@ -12,9 +12,11 @@ export default function WelcomePage()
         <>        <Box sx={{ height: "50px"}}></Box>        
         <TopNavBar/>
 
-            <Title text={"WELCOME"} fontSize={"55px"} weight={800}/>
+      <Title text={"WELCOME"} fontSize={"55px"} weight={800}/>
+<Box sx={{ display: "flex", ml: "300px"}}>
 
-        <WelcomeCard user={user}/>
+          <WelcomeCard user={user}/>
+    </Box>    
 
     </>
     )

@@ -21,7 +21,7 @@ const LoginForm = ({ userName, password, onUserNameChange, onPasswordChange, onS
       gap: "20px",
     }}
   >
-<Title text={"INICIAR SESION"} fontColor={"primary.font"} weight={700} fontSize={"20px"} width={"100%"}/>
+<Title text={"INICIAR SESIÓN"} fontColor={"primary.font"} weight={700} fontSize={"20px"} width={"100%"}/>
 
     <CustomTextField placeholder="Usuario" value={userName} onChange={onUserNameChange} width={"100%"}/>
     <CustomTextField placeholder="Contraseña" type="password" value={password} onChange={onPasswordChange} width={"100%"} />
